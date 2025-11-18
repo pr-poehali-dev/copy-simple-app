@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 
 const API_BASE = {
   auth: 'https://functions.poehali.dev/d983c386-5964-4e1e-9851-a74fc94a4552',
@@ -121,11 +122,30 @@ const Index = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [cardHolder, setCardHolder] = useState('');
   const [avatarAction, setAvatarAction] = useState('idle');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [showCookieConsent, setShowCookieConsent] = useState(true);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const cookieConsent = localStorage.getItem('cookieConsent');
+    if (cookieConsent === 'accepted') {
+      setShowCookieConsent(false);
+    }
+  }, []);
+
+  const handleCookieConsent = () => {
+    localStorage.setItem('cookieConsent', 'accepted');
+    setShowCookieConsent(false);
+  };
 
   const handleAuth = async () => {
     if (!phone.trim()) {
       toast({ title: 'Ошибка', description: 'Введите номер телефона', variant: 'destructive' });
+      return;
+    }
+
+    if (!agreedToTerms) {
+      toast({ title: 'Требуется согласие', description: 'Примите соглашение о персональных данных', variant: 'destructive' });
       return;
     }
 
@@ -315,12 +335,34 @@ const Index = () => {
               onChange={(e) => setPhone(e.target.value)}
               className="h-14 text-lg soft-shadow"
             />
+            
+            <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
+              <input
+                type="checkbox"
+                id="terms"
+                checked={agreedToTerms}
+                onChange={(e) => setAgreedToTerms(e.target.checked)}
+                className="mt-1 w-5 h-5 cursor-pointer"
+              />
+              <label htmlFor="terms" className="text-sm text-muted-foreground cursor-pointer">
+                Я соглашаюсь с{' '}
+                <Link to="/privacy" className="text-primary underline">политикой конфиденциальности</Link>
+                {' '}и{' '}
+                <Link to="/terms" className="text-primary underline">пользовательским соглашением</Link>
+              </label>
+            </div>
+
             <Button 
               onClick={handleAuth}
               className="w-full h-14 text-lg button-3d"
+              disabled={!agreedToTerms}
             >
               Войти
             </Button>
+            
+            <div className="text-center text-xs text-muted-foreground mt-4">
+              © 2024 Копи Просто. Все права защищены.
+            </div>
           </div>
         </Card>
       </div>
@@ -532,6 +574,19 @@ const Index = () => {
             </Button>
           </div>
         )}
+
+        <div className="mt-8 text-center text-xs text-muted-foreground space-y-2 mb-4">
+          <div className="flex justify-center gap-4">
+            <Link to="/privacy" className="hover:text-primary underline">
+              Политика конфиденциальности
+            </Link>
+            <span>•</span>
+            <Link to="/terms" className="hover:text-primary underline">
+              Пользовательское соглашение
+            </Link>
+          </div>
+          <p>© 2024 Копи Просто. Все права защищены.</p>
+        </div>
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 h-64 avatar-room p-6">
@@ -602,6 +657,33 @@ const Index = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {showCookieConsent && (
+        <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md z-50">
+          <Card className="p-4 card-3d bg-white/95 backdrop-blur">
+            <div className="space-y-3">
+              <div className="flex items-start gap-2">
+                <span className="text-2xl">🍪</span>
+                <div>
+                  <p className="text-sm font-medium mb-1">Мы используем cookie</p>
+                  <p className="text-xs text-muted-foreground">
+                    Этот сайт использует файлы cookie для улучшения работы и анализа посещаемости. 
+                    Продолжая использовать сайт, вы соглашаетесь с нашей{' '}
+                    <Link to="/privacy" className="text-primary underline">политикой конфиденциальности</Link>.
+                  </p>
+                </div>
+              </div>
+              <Button 
+                onClick={handleCookieConsent}
+                className="w-full button-3d"
+                size="sm"
+              >
+                Принять
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };
