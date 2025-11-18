@@ -1,0 +1,21 @@
+{
+  "tests": [
+    {
+      "name": "Add new card",
+      "method": "POST",
+      "body": {
+        "user_id": "1",
+        "card_number": "1234",
+        "card_holder": "IVAN PETROV"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "card": {
+          "card_number": "string",
+          "card_holder": "string"
+        }
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "tests": [
+    {
+      "name": "Create purchase with 80% cashback",
+      "method": "POST",
+      "body": {
+        "user_id": 1,
+        "category": "Кофе",
+        "price": 350,
+        "emoji": "☕"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "purchase": {
+          "category": "string",
+          "price": "number",
+          "cashback": "number"
+        },
+        "balance": "number",
+        "total_spent": "number"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
