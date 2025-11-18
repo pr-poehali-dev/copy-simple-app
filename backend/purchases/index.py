@@ -7,7 +7,7 @@ Returns: HTTP response with updated balance and purchase data
 import json
 import os
 import psycopg2
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Dict, Any
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -45,7 +45,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             
             cashback = price * 0.80
             
-            cur.execute("SELECT first_purchase_date FROM users WHERE id = %s", (user_id,))
+            cur.execute("SELECT first_purchase_date, withdrawal_window_end FROM users WHERE id = %s", (user_id,))
             user = cur.fetchone()
             
             if not user:
@@ -56,8 +56,21 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 }
             
             first_purchase_date = user[0]
+            withdrawal_window_end = user[1]
+            
             if not first_purchase_date:
-                cur.execute("UPDATE users SET first_purchase_date = %s WHERE id = %s", (datetime.now(), user_id))
+                now = datetime.now()
+                cur.execute("UPDATE users SET first_purchase_date = %s WHERE id = %s", (now, user_id))
+            
+            if first_purchase_date:
+                days_since_first = (datetime.now() - first_purchase_date).days
+                if days_since_first >= 180 and not withdrawal_window_end:
+                    window_start = datetime.now()
+                    window_end = window_start + timedelta(days=3)
+                    cur.execute(
+                        "UPDATE users SET withdrawal_window_start = %s, withdrawal_window_end = %s, is_unlocked = TRUE WHERE id = %s",
+                        (window_start, window_end, user_id)
+                    )
             
             cur.execute(
                 "UPDATE users SET balance = balance + %s, total_spent = total_spent + %s WHERE id = %s",

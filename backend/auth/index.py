@@ -41,7 +41,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             
             avatar = body_data.get('avatar')
             
-            cur.execute("SELECT id, phone, balance, total_spent, first_purchase_date, is_unlocked, avatar FROM users WHERE phone = %s", (phone,))
+            cur.execute("SELECT id, phone, balance, total_spent, first_purchase_date, is_unlocked, avatar, withdrawal_window_start, withdrawal_window_end FROM users WHERE phone = %s", (phone,))
             user = cur.fetchone()
             
             if user:
@@ -53,11 +53,13 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                     'first_purchase_date': user[4].isoformat() if user[4] else None,
                     'is_unlocked': user[5],
                     'avatar': user[6] or 'boy',
+                    'withdrawal_window_start': user[7].isoformat() if user[7] else None,
+                    'withdrawal_window_end': user[8].isoformat() if user[8] else None,
                     'needs_avatar': False
                 }
             else:
                 if avatar:
-                    cur.execute("INSERT INTO users (phone, avatar) VALUES (%s, %s) RETURNING id, phone, balance, total_spent, first_purchase_date, is_unlocked, avatar", (phone, avatar))
+                    cur.execute("INSERT INTO users (phone, avatar) VALUES (%s, %s) RETURNING id, phone, balance, total_spent, first_purchase_date, is_unlocked, avatar, withdrawal_window_start, withdrawal_window_end", (phone, avatar))
                     new_user = cur.fetchone()
                     conn.commit()
                     user_data = {
@@ -68,6 +70,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                         'first_purchase_date': new_user[4].isoformat() if new_user[4] else None,
                         'is_unlocked': new_user[5],
                         'avatar': new_user[6] or 'boy',
+                        'withdrawal_window_start': new_user[7].isoformat() if new_user[7] else None,
+                        'withdrawal_window_end': new_user[8].isoformat() if new_user[8] else None,
                         'needs_avatar': False
                     }
                 else:

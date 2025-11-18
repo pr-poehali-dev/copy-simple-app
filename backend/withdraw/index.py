@@ -11,6 +11,7 @@ import requests
 import base64
 from typing import Dict, Any
 from decimal import Decimal
+from datetime import datetime
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     method: str = event.get('httpMethod', 'GET')
@@ -45,7 +46,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 }
             
             cur.execute("""
-                SELECT balance, is_unlocked, first_purchase_date 
+                SELECT balance, is_unlocked, first_purchase_date, withdrawal_window_end 
                 FROM users 
                 WHERE id = %s
             """, (user_id,))
@@ -60,12 +61,20 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             
             balance = float(user[0]) if user[0] else 0
             is_unlocked = user[1]
+            withdrawal_window_end = user[3]
             
-            if not is_unlocked:
+            if not is_unlocked or not withdrawal_window_end:
                 return {
                     'statusCode': 403,
                     'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                    'body': json.dumps({'error': 'Withdrawal not available yet. Wait 180 days from first purchase'})
+                    'body': json.dumps({'error': 'Withdrawal window not open yet'})
+                }
+            
+            if datetime.now() > withdrawal_window_end:
+                return {
+                    'statusCode': 403,
+                    'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps({'error': 'Withdrawal window expired'})
                 }
             
             if balance < float(amount):
@@ -148,7 +157,10 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             
             cur.execute("""
                 UPDATE users 
-                SET balance = balance - %s
+                SET balance = balance - %s,
+                    withdrawal_window_start = NULL,
+                    withdrawal_window_end = NULL,
+                    is_unlocked = FALSE
                 WHERE id = %s
             """, (amount, user_id))
             

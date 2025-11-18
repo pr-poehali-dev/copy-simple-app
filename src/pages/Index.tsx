@@ -47,6 +47,8 @@ interface User {
   first_purchase_date: string | null;
   is_unlocked: boolean;
   avatar: string;
+  withdrawal_window_start: string | null;
+  withdrawal_window_end: string | null;
 }
 
 interface CardData {
@@ -86,8 +88,36 @@ const Index = () => {
       requestNotificationPermission();
       scheduleDailyNotifications();
       checkUnlockNotification();
+      checkWithdrawalWindowNotifications();
     }
   }, [user, showAuth]);
+
+  const checkWithdrawalWindowNotifications = () => {
+    if (!user || !user.withdrawal_window_end) return;
+
+    const windowEnd = new Date(user.withdrawal_window_end);
+    const now = new Date();
+    const daysLeft = Math.ceil((windowEnd.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+
+    const notificationKey = `withdrawal_day_${daysLeft}_${user.id}`;
+    const notificationSent = localStorage.getItem(notificationKey);
+
+    if (!notificationSent && daysLeft >= 1 && daysLeft <= 3) {
+      let message = '';
+      if (daysLeft === 3) {
+        message = '⏰ У вас 3 дня на вывод средств! Не упустите возможность!';
+      } else if (daysLeft === 2) {
+        message = '⚠️ Осталось 2 дня на вывод средств!';
+      } else if (daysLeft === 1) {
+        message = '🚨 ПОСЛЕДНИЙ ДЕНЬ! Завтра окно вывода закроется!';
+      }
+
+      if (message) {
+        sendNotification('Копи Просто', message);
+        localStorage.setItem(notificationKey, 'true');
+      }
+    }
+  };
 
   const requestNotificationPermission = async () => {
     if ('Notification' in window && Notification.permission === 'default') {
@@ -156,7 +186,12 @@ const Index = () => {
   const daysUntilUnlock = user?.first_purchase_date 
     ? Math.max(0, Math.ceil((new Date(user.first_purchase_date).getTime() + 180 * 24 * 60 * 60 * 1000 - Date.now()) / (24 * 60 * 60 * 1000)))
     : 180;
-  const isUnlocked = daysUntilUnlock === 0;
+  
+  const withdrawalWindowDaysLeft = user?.withdrawal_window_end
+    ? Math.max(0, Math.ceil((new Date(user.withdrawal_window_end).getTime() - Date.now()) / (24 * 60 * 60 * 1000)))
+    : 0;
+  
+  const isWithdrawalAvailable = user?.is_unlocked && user?.withdrawal_window_end && withdrawalWindowDaysLeft > 0;
 
   const handleAuth = async () => {
     if (!phone.trim()) {
@@ -404,13 +439,25 @@ const Index = () => {
               </Badge>
             </div>
             
-            <div className="mt-6 space-y-3">
-              <div className="flex justify-between text-sm text-white/90">
-                <span>До вывода средств</span>
-                <span className="font-semibold">{isUnlocked ? 'Доступно!' : `${daysUntilUnlock} дней`}</span>
+            {isWithdrawalAvailable ? (
+              <div className="mt-6 space-y-3">
+                <div className="flex justify-between text-sm text-white/90">
+                  <span>⏰ Окно вывода открыто</span>
+                  <span className="font-semibold animate-pulse">
+                    {withdrawalWindowDaysLeft === 1 ? '🚨 ПОСЛЕДНИЙ ДЕНЬ!' : `${withdrawalWindowDaysLeft} дней осталось`}
+                  </span>
+                </div>
+                <Progress value={((3 - withdrawalWindowDaysLeft + 1) / 3) * 100} className="h-2 bg-white/20" />
               </div>
-              <Progress value={isUnlocked ? 100 : ((180 - daysUntilUnlock) / 180) * 100} className="h-2 bg-white/20" />
-            </div>
+            ) : (
+              <div className="mt-6 space-y-3">
+                <div className="flex justify-between text-sm text-white/90">
+                  <span>До открытия окна вывода</span>
+                  <span className="font-semibold">{daysUntilUnlock > 0 ? `${daysUntilUnlock} дней` : 'Скоро...'}</span>
+                </div>
+                <Progress value={daysUntilUnlock > 0 ? ((180 - daysUntilUnlock) / 180) * 100 : 100} className="h-2 bg-white/20" />
+              </div>
+            )}
 
             <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
               <div>
@@ -483,9 +530,14 @@ const Index = () => {
 
         {activeTab === 'cards' && (
           <div className="space-y-4 animate-fade-in">
-            {isUnlocked && user && user.balance > 0 && (
-              <Card className="p-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white">
-                <h3 className="text-xl font-bold mb-2">💰 Вывод средств доступен!</h3>
+            {isWithdrawalAvailable && user && user.balance > 0 && (
+              <Card className="p-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white animate-pulse">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-xl font-bold">💰 Окно вывода открыто!</h3>
+                  <Badge variant="secondary" className="bg-white/30 text-white border-0 animate-bounce">
+                    {withdrawalWindowDaysLeft === 1 ? '🚨 ПОСЛЕДНИЙ ДЕНЬ' : `${withdrawalWindowDaysLeft} дня осталось`}
+                  </Badge>
+                </div>
                 <p className="mb-4 text-white/90">Доступно к выводу: {user.balance.toFixed(2)} ₽</p>
                 <Button 
                   variant="secondary" 
