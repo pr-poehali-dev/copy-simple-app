@@ -1,18 +1,21 @@
 {
   "tests": [
     {
-      "name": "Register new user with avatar",
+      "name": "Register new user with avatar and language",
       "method": "POST",
       "body": {
         "phone": "+79991234567",
-        "avatar": "boy"
+        "avatar": "boy_blonde",
+        "language": "ru"
       },
       "expectedStatus": 200,
       "expectedBody": {
         "user": {
           "id": "number",
           "phone": "string",
-          "avatar": "string"
+          "avatar": "string",
+          "language": "string",
+          "inventory": "array"
         }
       },
       "bodyMatcher": "partial"

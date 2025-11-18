@@ -16,27 +16,60 @@ const API_BASE = {
 };
 
 const CATEGORIES = [
-  { id: 1, name: 'Кофе', icon: 'Coffee', price: 350, emoji: '☕' },
-  { id: 2, name: 'Одежда', icon: 'ShirtIcon', price: 5000, emoji: '👕' },
-  { id: 3, name: 'Аксессуары', icon: 'Watch', price: 3000, emoji: '⌚' },
-  { id: 4, name: 'Телефон', icon: 'Smartphone', price: 50000, emoji: '📱' },
-  { id: 5, name: 'Наушники', icon: 'Headphones', price: 8000, emoji: '🎧' },
-  { id: 6, name: 'Обувь', icon: 'FootprintsIcon', price: 7000, emoji: '👟' },
-  { id: 7, name: 'Книги', icon: 'Book', price: 800, emoji: '📚' },
-  { id: 8, name: 'Еда', icon: 'UtensilsCrossed', price: 1500, emoji: '🍔' },
-  { id: 9, name: 'Косметика', icon: 'Sparkles', price: 2500, emoji: '💄' },
-  { id: 10, name: 'Спорт', icon: 'Dumbbell', price: 4000, emoji: '🏋️' },
+  { id: 1, name: 'Одежда', emoji: '👕', minPrice: 500, maxPrice: 15000 },
+  { id: 2, name: 'Еда', emoji: '🍔', minPrice: 200, maxPrice: 3000 },
+  { id: 3, name: 'Транспорт', emoji: '🚗', minPrice: 100, maxPrice: 5000 },
+  { id: 4, name: 'Развлечения', emoji: '🎬', minPrice: 300, maxPrice: 8000 },
+  { id: 5, name: 'Здоровье', emoji: '💊', minPrice: 500, maxPrice: 10000 },
+  { id: 6, name: 'Образование', emoji: '📚', minPrice: 1000, maxPrice: 50000 },
+  { id: 7, name: 'Дом', emoji: '🏠', minPrice: 1000, maxPrice: 100000 },
+  { id: 8, name: 'Путешествия', emoji: '✈️', minPrice: 5000, maxPrice: 100000 },
+  { id: 9, name: 'Электроника', emoji: '📱', minPrice: 3000, maxPrice: 100000 },
+  { id: 10, name: 'Подарки', emoji: '🎁', minPrice: 500, maxPrice: 20000 },
+  { id: 11, name: 'Напитки', emoji: '🥤', minPrice: 50, maxPrice: 1000 },
+  { id: 12, name: 'Другое', emoji: '❓', minPrice: 50, maxPrice: 100000 },
 ];
 
 const AVATARS = [
-  { id: 'boy', emoji: '👦', name: 'Мальчик' },
-  { id: 'girl', emoji: '👧', name: 'Девочка' },
-  { id: 'cat', emoji: '🐱', name: 'Котик' },
-  { id: 'tiger', emoji: '🐯', name: 'Тигрёнок' },
-  { id: 'panda', emoji: '🐼', name: 'Панда' },
-  { id: 'koala', emoji: '🐨', name: 'Коала' },
-  { id: 'fox', emoji: '🦊', name: 'Лисёнок' },
-  { id: 'alien', emoji: '👽', name: 'Инопланетянин' },
+  { id: 'boy_blonde', emoji: '👱‍♂️', name: 'Блондин', gender: 'male' },
+  { id: 'boy_brunette', emoji: '👨🏻', name: 'Брюнет', gender: 'male' },
+  { id: 'boy_ginger', emoji: '👨🏻‍🦰', name: 'Рыжий', gender: 'male' },
+  { id: 'boy_dark', emoji: '👨🏽', name: 'Темноволосый', gender: 'male' },
+  { id: 'girl_blonde', emoji: '👱‍♀️', name: 'Блондинка', gender: 'female' },
+  { id: 'girl_brunette', emoji: '👩🏻', name: 'Брюнетка', gender: 'female' },
+  { id: 'girl_ginger', emoji: '👩🏻‍🦰', name: 'Рыжая', gender: 'female' },
+  { id: 'girl_dark', emoji: '👩🏽', name: 'Темноволосая', gender: 'female' },
+  { id: 'cat', emoji: '🐱', name: 'Котик', gender: 'neutral' },
+  { id: 'tiger', emoji: '🐯', name: 'Тигрёнок', gender: 'neutral' },
+  { id: 'panda', emoji: '🐼', name: 'Панда', gender: 'neutral' },
+  { id: 'koala', emoji: '🐨', name: 'Коала', gender: 'neutral' },
+  { id: 'fox', emoji: '🦊', name: 'Лисёнок', gender: 'neutral' },
+  { id: 'alien', emoji: '👽', name: 'Инопланетянин', gender: 'neutral' },
+  { id: 'bear', emoji: '🐻', name: 'Мишка', gender: 'neutral' },
+  { id: 'rabbit', emoji: '🐰', name: 'Зайчик', gender: 'neutral' },
+];
+
+const LANGUAGES = [
+  { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'ja', name: '日本語', flag: '🇯🇵' },
+  { code: 'hy', name: 'Հայերեն', flag: '🇦🇲' },
+  { code: 'uz', name: 'Oʻzbekcha', flag: '🇺🇿' },
+  { code: 'ky', name: 'Кыргызча', flag: '🇰🇬' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+  { code: 'pt', name: 'Português', flag: '🇵🇹' },
+  { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+  { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'bn', name: 'বাংলা', flag: '🇧🇩' },
+  { code: 'ko', name: '한국어', flag: '🇰🇷' },
+  { code: 'pl', name: 'Polski', flag: '🇵🇱' },
+  { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
+  { code: 'sv', name: 'Svenska', flag: '🇸🇪' },
 ];
 
 interface User {
@@ -47,6 +80,8 @@ interface User {
   first_purchase_date: string | null;
   is_unlocked: boolean;
   avatar: string;
+  language: string;
+  inventory: any[];
   withdrawal_window_start: string | null;
   withdrawal_window_end: string | null;
 }
@@ -75,123 +110,18 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState('shop');
   const [showAuth, setShowAuth] = useState(true);
   const [showAvatarSelect, setShowAvatarSelect] = useState(false);
+  const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [showAddCard, setShowAddCard] = useState(false);
+  const [showCustomAmount, setShowCustomAmount] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<typeof CATEGORIES[0] | null>(null);
+  const [customAmount, setCustomAmount] = useState('');
   const [phone, setPhone] = useState('');
-  const [selectedAvatar, setSelectedAvatar] = useState('boy');
+  const [selectedAvatar, setSelectedAvatar] = useState('boy_blonde');
+  const [selectedLanguage, setSelectedLanguage] = useState('ru');
   const [cardNumber, setCardNumber] = useState('');
   const [cardHolder, setCardHolder] = useState('');
-  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [avatarAction, setAvatarAction] = useState('idle');
   const { toast } = useToast();
-
-  useEffect(() => {
-    if (user && !showAuth) {
-      requestNotificationPermission();
-      scheduleDailyNotifications();
-      checkUnlockNotification();
-      checkWithdrawalWindowNotifications();
-    }
-  }, [user, showAuth]);
-
-  const checkWithdrawalWindowNotifications = () => {
-    if (!user || !user.withdrawal_window_end) return;
-
-    const windowEnd = new Date(user.withdrawal_window_end);
-    const now = new Date();
-    const daysLeft = Math.ceil((windowEnd.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-
-    const notificationKey = `withdrawal_day_${daysLeft}_${user.id}`;
-    const notificationSent = localStorage.getItem(notificationKey);
-
-    if (!notificationSent && daysLeft >= 1 && daysLeft <= 3) {
-      let message = '';
-      if (daysLeft === 3) {
-        message = '⏰ У вас 3 дня на вывод средств! Не упустите возможность!';
-      } else if (daysLeft === 2) {
-        message = '⚠️ Осталось 2 дня на вывод средств!';
-      } else if (daysLeft === 1) {
-        message = '🚨 ПОСЛЕДНИЙ ДЕНЬ! Завтра окно вывода закроется!';
-      }
-
-      if (message) {
-        sendNotification('Копи Просто', message);
-        localStorage.setItem(notificationKey, 'true');
-      }
-    }
-  };
-
-  const requestNotificationPermission = async () => {
-    if ('Notification' in window && Notification.permission === 'default') {
-      const permission = await Notification.requestPermission();
-      setNotificationsEnabled(permission === 'granted');
-    } else if (Notification.permission === 'granted') {
-      setNotificationsEnabled(true);
-    }
-  };
-
-  const sendNotification = (title: string, body: string) => {
-    if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification(title, {
-        body,
-        icon: 'https://cdn.poehali.dev/projects/d169fa6d-9f43-4d19-81ea-a0b486accf9a/files/96055763-445e-4ce6-a929-4381b276c1c5.jpg',
-        badge: 'https://cdn.poehali.dev/projects/d169fa6d-9f43-4d19-81ea-a0b486accf9a/files/96055763-445e-4ce6-a929-4381b276c1c5.jpg',
-        tag: 'kopi-prosto'
-      });
-    }
-  };
-
-  const scheduleDailyNotifications = () => {
-    const messages = [
-      'Копи сегодня! 💰',
-      'Не забудь накопить на будущее ✨',
-      'Сегодня ты стал еще богаче, чем вчера! 🚀',
-      'Ты молодец! Копи сегодня больше на денежное завтра 💎',
-      'Завтра всегда больше чем сегодня — Копи Просто! 🎯'
-    ];
-
-    const lastNotification = localStorage.getItem('lastNotificationDate');
-    const today = new Date().toDateString();
-
-    if (lastNotification !== today) {
-      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-      setTimeout(() => {
-        sendNotification('Копи Просто', randomMessage);
-        localStorage.setItem('lastNotificationDate', today);
-      }, 3000);
-    }
-
-    const now = new Date();
-    const tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(10, 0, 0, 0);
-    const timeUntilTomorrow = tomorrow.getTime() - now.getTime();
-
-    setTimeout(() => {
-      scheduleDailyNotifications();
-    }, timeUntilTomorrow);
-  };
-
-  const checkUnlockNotification = () => {
-    if (user && isUnlocked && user.balance > 0) {
-      const notificationSent = localStorage.getItem(`unlock_notification_${user.id}`);
-      if (!notificationSent) {
-        sendNotification(
-          '🎉 Вывод средств доступен!',
-          `Можно вывести ${user.balance.toFixed(2)} ₽ на карту прямо сейчас!`
-        );
-        localStorage.setItem(`unlock_notification_${user.id}`, 'true');
-      }
-    }
-  };
-
-  const daysUntilUnlock = user?.first_purchase_date 
-    ? Math.max(0, Math.ceil((new Date(user.first_purchase_date).getTime() + 180 * 24 * 60 * 60 * 1000 - Date.now()) / (24 * 60 * 60 * 1000)))
-    : 180;
-  
-  const withdrawalWindowDaysLeft = user?.withdrawal_window_end
-    ? Math.max(0, Math.ceil((new Date(user.withdrawal_window_end).getTime() - Date.now()) / (24 * 60 * 60 * 1000)))
-    : 0;
-  
-  const isWithdrawalAvailable = user?.is_unlocked && user?.withdrawal_window_end && withdrawalWindowDaysLeft > 0;
 
   const handleAuth = async () => {
     if (!phone.trim()) {
@@ -214,7 +144,6 @@ const Index = () => {
         setShowAuth(false);
         loadUserData(data.user.id);
         toast({ title: 'Вход выполнен', description: `Добро пожаловать!` });
-        requestNotificationPermission();
       }
     } catch (error) {
       toast({ title: 'Ошибка', description: 'Не удалось войти', variant: 'destructive' });
@@ -222,20 +151,24 @@ const Index = () => {
   };
 
   const handleAvatarSelect = async () => {
+    setShowAvatarSelect(false);
+    setShowLanguageSelect(true);
+  };
+
+  const handleLanguageSelect = async () => {
     try {
       const res = await fetch(API_BASE.auth, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone, avatar: selectedAvatar })
+        body: JSON.stringify({ phone, avatar: selectedAvatar, language: selectedLanguage })
       });
       const data = await res.json();
       
       if (data.user) {
         setUser(data.user);
         setShowAuth(false);
-        setShowAvatarSelect(false);
+        setShowLanguageSelect(false);
         toast({ title: 'Добро пожаловать!', description: 'Аккаунт успешно создан' });
-        requestNotificationPermission();
       }
     } catch (error) {
       toast({ title: 'Ошибка', description: 'Не удалось создать аккаунт', variant: 'destructive' });
@@ -257,8 +190,35 @@ const Index = () => {
     }
   };
 
-  const handlePurchase = async (category: typeof CATEGORIES[0]) => {
+  const handleCategoryClick = (category: typeof CATEGORIES[0]) => {
+    if (category.id === 12) {
+      setSelectedCategory(category);
+      setShowCustomAmount(true);
+    } else {
+      const randomPrice = Math.floor(Math.random() * (category.maxPrice - category.minPrice + 1)) + category.minPrice;
+      handlePurchase(category, randomPrice);
+    }
+  };
+
+  const handleCustomPurchase = () => {
+    const amount = parseFloat(customAmount);
+    if (!selectedCategory || isNaN(amount) || amount < 50 || amount > 100000) {
+      toast({ title: 'Ошибка', description: 'Введите сумму от 50 до 100000 ₽', variant: 'destructive' });
+      return;
+    }
+    handlePurchase(selectedCategory, amount);
+    setShowCustomAmount(false);
+    setCustomAmount('');
+  };
+
+  const handlePurchase = async (category: typeof CATEGORIES[0], price: number) => {
     if (!user) return;
+
+    if (cards.length === 0) {
+      toast({ title: 'Добавьте карту', description: 'Сначала привяжите банковскую карту', variant: 'destructive' });
+      setActiveTab('cards');
+      return;
+    }
 
     try {
       const res = await fetch(API_BASE.purchases, {
@@ -267,7 +227,7 @@ const Index = () => {
         body: JSON.stringify({
           user_id: user.id,
           category: category.name,
-          price: category.price,
+          price: price,
           emoji: category.emoji
         })
       });
@@ -275,9 +235,13 @@ const Index = () => {
       if (data.purchase) {
         setUser({ ...user, balance: data.balance, total_spent: data.total_spent });
         setPurchases([data.purchase, ...purchases]);
+        
+        setAvatarAction(category.emoji);
+        setTimeout(() => setAvatarAction('idle'), 2000);
+        
         toast({ 
           title: '✅ Покупка совершена!', 
-          description: `+${data.purchase.cashback.toFixed(0)} ₽ на счёт (80% кэшбэк)` 
+          description: `+${data.purchase.cashback.toFixed(0)} ₽ кэшбэк (80%)` 
         });
       }
     } catch (error) {
@@ -287,7 +251,7 @@ const Index = () => {
 
   const handleAddCard = async () => {
     if (!user || cardNumber.length !== 4 || !cardHolder.trim()) {
-      toast({ title: 'Ошибка', description: 'Заполните все поля корректно', variant: 'destructive' });
+      toast({ title: 'Ошибка', description: 'Введите последние 4 цифры карты и имя держателя', variant: 'destructive' });
       return;
     }
 
@@ -315,38 +279,79 @@ const Index = () => {
   };
 
   const getAvatarEmoji = (avatarId: string) => {
-    return AVATARS.find(a => a.id === avatarId)?.emoji || '👦';
+    return AVATARS.find(a => a.id === avatarId)?.emoji || '👱‍♂️';
   };
+
+  const daysUntilUnlock = user?.first_purchase_date 
+    ? Math.max(0, Math.ceil((new Date(user.first_purchase_date).getTime() + 180 * 24 * 60 * 60 * 1000 - Date.now()) / (24 * 60 * 60 * 1000)))
+    : 180;
+  
+  const withdrawalWindowDaysLeft = user?.withdrawal_window_end
+    ? Math.max(0, Math.ceil((new Date(user.withdrawal_window_end).getTime() - Date.now()) / (24 * 60 * 60 * 1000)))
+    : 0;
+  
+  const isWithdrawalAvailable = user?.is_unlocked && user?.withdrawal_window_end && withdrawalWindowDaysLeft > 0;
+
+  if (showAuth && !showAvatarSelect && !showLanguageSelect) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md p-8 card-3d bounce-in">
+          <div className="text-center mb-8">
+            <div className="text-6xl mb-4">💰</div>
+            <h1 className="text-4xl font-bold mb-2 text-3d bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent">
+              Копи Просто
+            </h1>
+            <p className="text-muted-foreground">Покупай виртуально, копи реально!</p>
+          </div>
+          
+          <div className="space-y-4">
+            <Input 
+              placeholder="+7 (___) ___-__-__"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="h-14 text-lg soft-shadow"
+            />
+            <Button 
+              onClick={handleAuth}
+              className="w-full h-14 text-lg button-3d"
+            >
+              Войти
+            </Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   if (showAvatarSelect) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-2xl p-8 animate-scale-in">
+      <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 flex items-center justify-center p-4">
+        <Card className="w-full max-w-3xl p-8 card-3d slide-up">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-2">Выберите аватар</h2>
-            <p className="text-muted-foreground">Он будет отображаться в вашем профиле</p>
+            <h2 className="text-3xl font-bold mb-2 text-3d">Выберите аватар</h2>
+            <p className="text-muted-foreground">Он будет жить в вашей комнате</p>
           </div>
           
           <div className="grid grid-cols-4 gap-4 mb-8">
             {AVATARS.map((avatar) => (
               <Card
                 key={avatar.id}
-                className={`p-6 cursor-pointer hover:shadow-xl transition-all duration-300 ${
-                  selectedAvatar === avatar.id ? 'ring-4 ring-primary shadow-xl scale-105' : ''
+                className={`p-4 cursor-pointer card-3d transition-all duration-300 ${
+                  selectedAvatar === avatar.id ? 'ring-4 ring-primary glow-blue scale-105' : ''
                 }`}
                 onClick={() => setSelectedAvatar(avatar.id)}
               >
                 <div className="text-center">
                   <div className="text-5xl mb-2">{avatar.emoji}</div>
-                  <p className="text-sm font-medium">{avatar.name}</p>
+                  <p className="text-xs font-medium">{avatar.name}</p>
                 </div>
               </Card>
             ))}
           </div>
 
           <Button 
-            className="w-full h-12 text-lg bg-gradient-to-r from-primary to-secondary"
             onClick={handleAvatarSelect}
+            className="w-full h-12 text-lg button-3d"
           >
             Продолжить
           </Button>
@@ -355,173 +360,140 @@ const Index = () => {
     );
   }
 
-  if (showAuth) {
+  if (showLanguageSelect) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md p-8 animate-scale-in">
+      <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 flex items-center justify-center p-4">
+        <Card className="w-full max-w-3xl p-8 card-3d slide-up">
           <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-3xl mx-auto mb-4 flex items-center justify-center text-4xl">
-              💰
-            </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent mb-2">
-              Копи Просто
-            </h1>
-            <p className="text-muted-foreground">Покупай виртуально, копи реально</p>
+            <h2 className="text-3xl font-bold mb-2 text-3d">Выберите язык</h2>
+            <p className="text-muted-foreground">Choose your language</p>
           </div>
           
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium mb-2 block">Номер телефона</label>
-              <Input
-                type="tel"
-                placeholder="+7 (999) 123-45-67"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="text-lg"
-              />
-            </div>
-            <Button 
-              className="w-full h-12 text-lg bg-gradient-to-r from-primary to-secondary"
-              onClick={handleAuth}
-            >
-              Войти / Зарегистрироваться
-            </Button>
+          <div className="grid grid-cols-4 gap-4 mb-8 max-h-96 overflow-y-auto">
+            {LANGUAGES.map((lang) => (
+              <Card
+                key={lang.code}
+                className={`p-4 cursor-pointer card-3d transition-all duration-300 ${
+                  selectedLanguage === lang.code ? 'ring-4 ring-primary glow-blue scale-105' : ''
+                }`}
+                onClick={() => setSelectedLanguage(lang.code)}
+              >
+                <div className="text-center">
+                  <div className="text-4xl mb-2">{lang.flag}</div>
+                  <p className="text-xs font-medium">{lang.name}</p>
+                </div>
+              </Card>
+            ))}
           </div>
 
-          <div className="mt-8 p-4 bg-muted rounded-xl space-y-2 text-sm">
-            <p className="font-semibold">🎁 Как это работает:</p>
-            <ul className="space-y-1 text-muted-foreground">
-              <li>• Покупай виртуальные товары</li>
-              <li>• Получай 80% кэшбэк на счёт</li>
-              <li>• Через 6 месяцев выводи деньги</li>
-            </ul>
-          </div>
+          <Button 
+            onClick={handleLanguageSelect}
+            className="w-full h-12 text-lg button-3d"
+          >
+            Начать
+          </Button>
         </Card>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50">
-      <div className="max-w-7xl mx-auto p-4 pb-24">
-        <header className="mb-8 pt-4">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                Копи Просто
-              </h1>
-              <p className="text-muted-foreground mt-1">{user?.phone}</p>
-            </div>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="rounded-full"
-              onClick={() => setShowAuth(true)}
-            >
-              <Icon name="LogOut" size={24} />
-            </Button>
-          </div>
-
-          <div className="mb-6 p-4 bg-gradient-to-r from-blue-100 to-red-100 rounded-2xl border-2 border-blue-200">
-            <p className="text-center text-lg font-semibold text-primary">
-              ✨ Завтра всегда больше чем сегодня — Копи Просто
-            </p>
-          </div>
-
-          <Card className="p-6 bg-gradient-to-br from-primary to-secondary text-white shadow-lg animate-fade-in">
-            <div className="flex items-start justify-between mb-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100">
+      <div className="container mx-auto p-4 pb-32">
+        <Card className="mb-6 p-6 card-3d">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="text-6xl">{getAvatarEmoji(user?.avatar || 'boy_blonde')}</div>
               <div>
-                <p className="text-white/80 text-sm mb-1">Ваш баланс</p>
-                <h2 className="text-4xl font-bold">{user?.balance.toFixed(2)} ₽</h2>
+                <h2 className="text-2xl font-bold text-3d">
+                  {user?.balance.toFixed(0)} ₽
+                </h2>
+                <p className="text-sm text-muted-foreground">Накоплено</p>
               </div>
-              <Badge variant="secondary" className="bg-white/20 text-white border-0">
-                +80% кэшбэк
+            </div>
+            <div className="text-right">
+              <Badge variant="secondary" className="text-lg px-4 py-2 soft-shadow">
+                {user?.total_spent.toFixed(0)} ₽ потрачено
               </Badge>
             </div>
-            
-            {isWithdrawalAvailable ? (
-              <div className="mt-6 space-y-3">
-                <div className="flex justify-between text-sm text-white/90">
-                  <span>⏰ Окно вывода открыто</span>
-                  <span className="font-semibold animate-pulse">
-                    {withdrawalWindowDaysLeft === 1 ? '🚨 ПОСЛЕДНИЙ ДЕНЬ!' : `${withdrawalWindowDaysLeft} дней осталось`}
-                  </span>
+          </div>
+          
+          {!isWithdrawalAvailable && user?.first_purchase_date && (
+            <div className="mt-4">
+              <div className="flex justify-between text-sm mb-2">
+                <span>До вывода средств</span>
+                <span className="font-bold">{daysUntilUnlock} дней</span>
+              </div>
+              <Progress value={(180 - daysUntilUnlock) / 180 * 100} className="h-3" />
+            </div>
+          )}
+          
+          {isWithdrawalAvailable && (
+            <div className="mt-4 p-4 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg text-white card-3d">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-bold text-lg">Окно вывода открыто!</p>
+                  <p className="text-sm">Осталось {withdrawalWindowDaysLeft} {withdrawalWindowDaysLeft === 1 ? 'день' : 'дня'}</p>
                 </div>
-                <Progress value={((3 - withdrawalWindowDaysLeft + 1) / 3) * 100} className="h-2 bg-white/20" />
-              </div>
-            ) : (
-              <div className="mt-6 space-y-3">
-                <div className="flex justify-between text-sm text-white/90">
-                  <span>До открытия окна вывода</span>
-                  <span className="font-semibold">{daysUntilUnlock > 0 ? `${daysUntilUnlock} дней` : 'Скоро...'}</span>
-                </div>
-                <Progress value={daysUntilUnlock > 0 ? ((180 - daysUntilUnlock) / 180) * 100 : 100} className="h-2 bg-white/20" />
-              </div>
-            )}
-
-            <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <p className="text-white/70">Всего потрачено</p>
-                <p className="font-semibold text-lg">{user?.total_spent.toFixed(0)} ₽</p>
-              </div>
-              <div>
-                <p className="text-white/70">Покупок</p>
-                <p className="font-semibold text-lg">{purchases.length}</p>
+                <Button className="bg-white text-primary hover:bg-gray-100 button-3d">
+                  Вывести
+                </Button>
               </div>
             </div>
-          </Card>
-        </header>
+          )}
+        </Card>
 
-        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
-          <Button
-            variant={activeTab === 'shop' ? 'default' : 'outline'}
-            onClick={() => setActiveTab('shop')}
-            className="rounded-full"
-          >
-            <Icon name="ShoppingBag" size={16} className="mr-2" />
-            Магазин
-          </Button>
-          <Button
-            variant={activeTab === 'cards' ? 'default' : 'outline'}
-            onClick={() => setActiveTab('cards')}
-            className="rounded-full"
-          >
-            <Icon name="CreditCard" size={16} className="mr-2" />
-            Карты
-          </Button>
-          <Button
-            variant={activeTab === 'avatar' ? 'default' : 'outline'}
-            onClick={() => setActiveTab('avatar')}
-            className="rounded-full"
-          >
-            <Icon name="User" size={16} className="mr-2" />
-            Аватар
-          </Button>
-          <Button
-            variant={activeTab === 'history' ? 'default' : 'outline'}
-            onClick={() => setActiveTab('history')}
-            className="rounded-full"
-          >
-            <Icon name="History" size={16} className="mr-2" />
-            История
-          </Button>
+        <div className="flex gap-2 mb-6 overflow-x-auto">
+          {['shop', 'history', 'cards'].map((tab) => (
+            <Button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              variant={activeTab === tab ? 'default' : 'outline'}
+              className={`button-3d ${activeTab === tab ? 'glow-blue' : ''}`}
+            >
+              {tab === 'shop' && '🛍️ Покупки'}
+              {tab === 'history' && '📜 История'}
+              {tab === 'cards' && '💳 Карты'}
+            </Button>
+          ))}
         </div>
 
         {activeTab === 'shop' && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 animate-fade-in">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {CATEGORIES.map((category) => (
               <Card
                 key={category.id}
-                className="p-4 hover:shadow-xl transition-all duration-300 cursor-pointer group hover:scale-105"
-                onClick={() => handlePurchase(category)}
+                className="p-6 cursor-pointer card-3d text-center"
+                onClick={() => handleCategoryClick(category)}
               >
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl flex items-center justify-center text-4xl group-hover:animate-pulse-glow transition-all">
-                    {category.emoji}
+                <div className="text-5xl mb-3">{category.emoji}</div>
+                <p className="font-bold mb-1">{category.name}</p>
+                <p className="text-xs text-muted-foreground">
+                  {category.minPrice}-{category.maxPrice} ₽
+                </p>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'history' && (
+          <div className="space-y-3">
+            {purchases.map((purchase) => (
+              <Card key={purchase.id} className="p-4 card-3d slide-up">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="text-3xl">{purchase.emoji}</div>
+                    <div>
+                      <p className="font-bold">{purchase.category}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {new Date(purchase.created_at).toLocaleDateString('ru-RU')}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold mb-1">{category.name}</h3>
-                  <p className="text-2xl font-bold text-primary mb-1">{category.price} ₽</p>
-                  <p className="text-xs text-green-600 font-semibold">+{(category.price * 0.80).toFixed(0)} ₽ на счёт</p>
+                  <div className="text-right">
+                    <p className="font-bold">{purchase.price.toFixed(0)} ₽</p>
+                    <p className="text-sm text-green-600">+{purchase.cashback.toFixed(0)} ₽</p>
+                  </div>
                 </div>
               </Card>
             ))}
@@ -529,160 +501,93 @@ const Index = () => {
         )}
 
         {activeTab === 'cards' && (
-          <div className="space-y-4 animate-fade-in">
-            {isWithdrawalAvailable && user && user.balance > 0 && (
-              <Card className="p-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white animate-pulse">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xl font-bold">💰 Окно вывода открыто!</h3>
-                  <Badge variant="secondary" className="bg-white/30 text-white border-0 animate-bounce">
-                    {withdrawalWindowDaysLeft === 1 ? '🚨 ПОСЛЕДНИЙ ДЕНЬ' : `${withdrawalWindowDaysLeft} дня осталось`}
-                  </Badge>
-                </div>
-                <p className="mb-4 text-white/90">Доступно к выводу: {user.balance.toFixed(2)} ₽</p>
-                <Button 
-                  variant="secondary" 
-                  className="w-full bg-white text-green-700 hover:bg-white/90"
-                  onClick={async () => {
-                    if (!user || cards.length === 0) {
-                      toast({ title: 'Ошибка', description: 'Добавьте карту для вывода', variant: 'destructive' });
-                      return;
-                    }
-                    try {
-                      const res = await fetch(API_BASE.withdraw, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          user_id: user.id,
-                          amount: user.balance,
-                          card_id: cards[0].id
-                        })
-                      });
-                      const data = await res.json();
-                      if (data.payment_url) {
-                        window.open(data.payment_url, '_blank');
-                        toast({ title: 'Вывод оформлен!', description: 'Откройте новое окно для оплаты' });
-                      }
-                    } catch (error) {
-                      toast({ title: 'Ошибка', description: 'Не удалось оформить вывод', variant: 'destructive' });
-                    }
-                  }}
-                >
-                  Вывести на карту
-                </Button>
-              </Card>
-            )}
-
-            <Button onClick={() => setShowAddCard(true)} className="w-full h-14 text-lg">
-              <Icon name="Plus" size={20} className="mr-2" />
-              Добавить карту
-            </Button>
-
-            {cards.length === 0 ? (
-              <Card className="p-12 text-center">
-                <Icon name="CreditCard" size={48} className="mx-auto text-muted-foreground mb-4" />
-                <p className="text-muted-foreground">Добавьте карту для покупок</p>
-              </Card>
-            ) : (
-              cards.map((card) => (
-                <Card key={card.id} className="p-6">
-                  <div className="flex items-center justify-between">
+          <div className="space-y-3">
+            {cards.map((card) => (
+              <Card key={card.id} className="p-4 card-3d">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Icon name="CreditCard" size={32} className="text-primary" />
                     <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Icon name="CreditCard" size={24} className="text-primary" />
-                        <span className="font-mono text-lg">•••• {card.card_number}</span>
-                        {card.is_primary && <Badge>Основная</Badge>}
-                      </div>
+                      <p className="font-bold">**** {card.card_number}</p>
                       <p className="text-sm text-muted-foreground">{card.card_holder}</p>
                     </div>
                   </div>
-                </Card>
-              ))
-            )}
-          </div>
-        )}
-
-        {activeTab === 'avatar' && (
-          <div className="animate-fade-in">
-            <Card className="p-8">
-              <div className="text-center">
-                <h3 className="text-xl font-bold mb-6">Ваш аватар</h3>
-                <div className="relative w-64 h-64 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-red-100 rounded-full flex items-center justify-center overflow-hidden">
-                  <div className="text-6xl mb-4">{getAvatarEmoji(user?.avatar || 'boy')}</div>
-                  <div className="absolute bottom-0 left-0 right-0 flex flex-wrap justify-center gap-2 p-4">
-                    {purchases.slice(-6).map((purchase, idx) => (
-                      <span key={idx} className="text-3xl animate-scale-in">
-                        {purchase.emoji}
-                      </span>
-                    ))}
-                  </div>
+                  {card.is_primary && (
+                    <Badge className="soft-shadow">Основная</Badge>
+                  )}
                 </div>
-                <p className="text-muted-foreground">
-                  {purchases.length === 0 ? 'Совершите покупки, чтобы украсить аватар' : `Собрано предметов: ${purchases.length}`}
-                </p>
-              </div>
-            </Card>
-          </div>
-        )}
-
-        {activeTab === 'history' && (
-          <div className="space-y-3 animate-fade-in">
-            {purchases.length === 0 ? (
-              <Card className="p-12 text-center">
-                <Icon name="ShoppingCart" size={48} className="mx-auto text-muted-foreground mb-4" />
-                <p className="text-muted-foreground">История покупок пуста</p>
               </Card>
-            ) : (
-              purchases.map((purchase, idx) => (
-                <Card key={idx} className="p-4 hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="text-3xl">{purchase.emoji}</div>
-                      <div>
-                        <h4 className="font-semibold">{purchase.category}</h4>
-                        <p className="text-sm text-muted-foreground">
-                          {new Date(purchase.created_at).toLocaleDateString('ru-RU')}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-bold">{purchase.price} ₽</p>
-                      <p className="text-sm text-green-600 font-semibold">+{purchase.cashback.toFixed(0)} ₽</p>
-                    </div>
-                  </div>
-                </Card>
-              ))
-            )}
+            ))}
+            
+            <Button 
+              onClick={() => setShowAddCard(true)}
+              className="w-full h-12 button-3d"
+            >
+              <Icon name="Plus" className="mr-2" />
+              Добавить карту
+            </Button>
           </div>
         )}
       </div>
 
+      <div className="fixed bottom-0 left-0 right-0 h-64 avatar-room p-6">
+        <div className="flex items-center justify-center h-full">
+          <div className={`text-9xl transition-transform duration-500 ${
+            avatarAction !== 'idle' ? 'scale-110 bounce-in' : ''
+          }`}>
+            {getAvatarEmoji(user?.avatar || 'boy_blonde')}
+          </div>
+          {avatarAction !== 'idle' && (
+            <div className="absolute text-6xl animate-bounce">
+              {avatarAction}
+            </div>
+          )}
+        </div>
+      </div>
+
       <Dialog open={showAddCard} onOpenChange={setShowAddCard}>
-        <DialogContent>
+        <DialogContent className="card-3d">
           <DialogHeader>
             <DialogTitle>Добавить карту</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium mb-2 block">Последние 4 цифры карты</label>
-              <Input
-                type="text"
-                maxLength={4}
-                placeholder="1234"
-                value={cardNumber}
-                onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, ''))}
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium mb-2 block">Имя владельца (как на карте)</label>
-              <Input
-                type="text"
-                placeholder="IVAN IVANOV"
-                value={cardHolder}
-                onChange={(e) => setCardHolder(e.target.value)}
-              />
-            </div>
-            <Button onClick={handleAddCard} className="w-full">
+            <Input 
+              placeholder="Последние 4 цифры"
+              value={cardNumber}
+              onChange={(e) => setCardNumber(e.target.value.slice(0, 4))}
+              maxLength={4}
+              className="soft-shadow"
+            />
+            <Input 
+              placeholder="Имя держателя"
+              value={cardHolder}
+              onChange={(e) => setCardHolder(e.target.value)}
+              className="soft-shadow"
+            />
+            <Button onClick={handleAddCard} className="w-full button-3d">
               Добавить
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showCustomAmount} onOpenChange={setShowCustomAmount}>
+        <DialogContent className="card-3d">
+          <DialogHeader>
+            <DialogTitle>Укажите сумму покупки</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <Input 
+              type="number"
+              placeholder="От 50 до 100000 ₽"
+              value={customAmount}
+              onChange={(e) => setCustomAmount(e.target.value)}
+              min={50}
+              max={100000}
+              className="soft-shadow"
+            />
+            <Button onClick={handleCustomPurchase} className="w-full button-3d">
+              Совершить покупку
             </Button>
           </div>
         </DialogContent>
