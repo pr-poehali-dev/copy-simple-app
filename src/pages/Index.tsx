@@ -191,19 +191,23 @@ const Index = () => {
   };
 
   const handleCategoryClick = (category: typeof CATEGORIES[0]) => {
-    if (category.id === 12) {
-      setSelectedCategory(category);
-      setShowCustomAmount(true);
-    } else {
-      const randomPrice = Math.floor(Math.random() * (category.maxPrice - category.minPrice + 1)) + category.minPrice;
-      handlePurchase(category, randomPrice);
-    }
+    setSelectedCategory(category);
+    setShowCustomAmount(true);
   };
 
   const handleCustomPurchase = () => {
+    if (!selectedCategory) return;
+    
     const amount = parseFloat(customAmount);
-    if (!selectedCategory || isNaN(amount) || amount < 50 || amount > 100000) {
-      toast({ title: 'Ошибка', description: 'Введите сумму от 50 до 100000 ₽', variant: 'destructive' });
+    const minPrice = selectedCategory.minPrice;
+    const maxPrice = selectedCategory.maxPrice;
+    
+    if (isNaN(amount) || amount < minPrice || amount > maxPrice) {
+      toast({ 
+        title: 'Ошибка', 
+        description: `Введите сумму от ${minPrice} до ${maxPrice} ₽`, 
+        variant: 'destructive' 
+      });
       return;
     }
     handlePurchase(selectedCategory, amount);
@@ -574,20 +578,26 @@ const Index = () => {
       <Dialog open={showCustomAmount} onOpenChange={setShowCustomAmount}>
         <DialogContent className="card-3d">
           <DialogHeader>
-            <DialogTitle>Укажите сумму покупки</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <span className="text-4xl">{selectedCategory?.emoji}</span>
+              {selectedCategory?.name}
+            </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
+            <div className="text-center text-muted-foreground text-sm">
+              Введите сумму от {selectedCategory?.minPrice} до {selectedCategory?.maxPrice} ₽
+            </div>
             <Input 
               type="number"
-              placeholder="От 50 до 100000 ₽"
+              placeholder={`От ${selectedCategory?.minPrice} до ${selectedCategory?.maxPrice} ₽`}
               value={customAmount}
               onChange={(e) => setCustomAmount(e.target.value)}
-              min={50}
-              max={100000}
-              className="soft-shadow"
+              min={selectedCategory?.minPrice}
+              max={selectedCategory?.maxPrice}
+              className="soft-shadow text-center text-2xl h-16"
             />
-            <Button onClick={handleCustomPurchase} className="w-full button-3d">
-              Совершить покупку
+            <Button onClick={handleCustomPurchase} className="w-full button-3d h-14 text-lg">
+              Купить за {customAmount || '0'} ₽
             </Button>
           </div>
         </DialogContent>
