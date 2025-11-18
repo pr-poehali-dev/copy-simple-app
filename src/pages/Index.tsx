@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -78,7 +78,80 @@ const Index = () => {
   const [selectedAvatar, setSelectedAvatar] = useState('boy');
   const [cardNumber, setCardNumber] = useState('');
   const [cardHolder, setCardHolder] = useState('');
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (user && !showAuth) {
+      requestNotificationPermission();
+      scheduleDailyNotifications();
+      checkUnlockNotification();
+    }
+  }, [user, showAuth]);
+
+  const requestNotificationPermission = async () => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      const permission = await Notification.requestPermission();
+      setNotificationsEnabled(permission === 'granted');
+    } else if (Notification.permission === 'granted') {
+      setNotificationsEnabled(true);
+    }
+  };
+
+  const sendNotification = (title: string, body: string) => {
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification(title, {
+        body,
+        icon: 'https://cdn.poehali.dev/projects/d169fa6d-9f43-4d19-81ea-a0b486accf9a/files/96055763-445e-4ce6-a929-4381b276c1c5.jpg',
+        badge: 'https://cdn.poehali.dev/projects/d169fa6d-9f43-4d19-81ea-a0b486accf9a/files/96055763-445e-4ce6-a929-4381b276c1c5.jpg',
+        tag: 'kopi-prosto'
+      });
+    }
+  };
+
+  const scheduleDailyNotifications = () => {
+    const messages = [
+      'Копи сегодня! 💰',
+      'Не забудь накопить на будущее ✨',
+      'Сегодня ты стал еще богаче, чем вчера! 🚀',
+      'Ты молодец! Копи сегодня больше на денежное завтра 💎',
+      'Завтра всегда больше чем сегодня — Копи Просто! 🎯'
+    ];
+
+    const lastNotification = localStorage.getItem('lastNotificationDate');
+    const today = new Date().toDateString();
+
+    if (lastNotification !== today) {
+      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+      setTimeout(() => {
+        sendNotification('Копи Просто', randomMessage);
+        localStorage.setItem('lastNotificationDate', today);
+      }, 3000);
+    }
+
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(10, 0, 0, 0);
+    const timeUntilTomorrow = tomorrow.getTime() - now.getTime();
+
+    setTimeout(() => {
+      scheduleDailyNotifications();
+    }, timeUntilTomorrow);
+  };
+
+  const checkUnlockNotification = () => {
+    if (user && isUnlocked && user.balance > 0) {
+      const notificationSent = localStorage.getItem(`unlock_notification_${user.id}`);
+      if (!notificationSent) {
+        sendNotification(
+          '🎉 Вывод средств доступен!',
+          `Можно вывести ${user.balance.toFixed(2)} ₽ на карту прямо сейчас!`
+        );
+        localStorage.setItem(`unlock_notification_${user.id}`, 'true');
+      }
+    }
+  };
 
   const daysUntilUnlock = user?.first_purchase_date 
     ? Math.max(0, Math.ceil((new Date(user.first_purchase_date).getTime() + 180 * 24 * 60 * 60 * 1000 - Date.now()) / (24 * 60 * 60 * 1000)))
@@ -106,6 +179,7 @@ const Index = () => {
         setShowAuth(false);
         loadUserData(data.user.id);
         toast({ title: 'Вход выполнен', description: `Добро пожаловать!` });
+        requestNotificationPermission();
       }
     } catch (error) {
       toast({ title: 'Ошибка', description: 'Не удалось войти', variant: 'destructive' });
@@ -126,6 +200,7 @@ const Index = () => {
         setShowAuth(false);
         setShowAvatarSelect(false);
         toast({ title: 'Добро пожаловать!', description: 'Аккаунт успешно создан' });
+        requestNotificationPermission();
       }
     } catch (error) {
       toast({ title: 'Ошибка', description: 'Не удалось создать аккаунт', variant: 'destructive' });
