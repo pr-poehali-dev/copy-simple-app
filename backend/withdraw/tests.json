@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "Missing user_id in GET",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

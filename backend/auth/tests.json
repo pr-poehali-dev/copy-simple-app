@@ -1,16 +1,18 @@
 {
   "tests": [
     {
-      "name": "Register new user",
+      "name": "Register new user with avatar",
       "method": "POST",
       "body": {
-        "phone": "+79991234567"
+        "phone": "+79991234567",
+        "avatar": "boy"
       },
       "expectedStatus": 200,
       "expectedBody": {
         "user": {
           "id": "number",
-          "phone": "string"
+          "phone": "string",
+          "avatar": "string"
         }
       },
       "bodyMatcher": "partial"

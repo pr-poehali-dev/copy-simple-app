@@ -39,7 +39,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                     'body': json.dumps({'error': 'Phone number is required'})
                 }
             
-            cur.execute("SELECT id, phone, balance, total_spent, first_purchase_date, is_unlocked FROM users WHERE phone = %s", (phone,))
+            avatar = body_data.get('avatar')
+            
+            cur.execute("SELECT id, phone, balance, total_spent, first_purchase_date, is_unlocked, avatar FROM users WHERE phone = %s", (phone,))
             user = cur.fetchone()
             
             if user:
@@ -49,20 +51,31 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                     'balance': float(user[2]) if user[2] else 0,
                     'total_spent': float(user[3]) if user[3] else 0,
                     'first_purchase_date': user[4].isoformat() if user[4] else None,
-                    'is_unlocked': user[5]
+                    'is_unlocked': user[5],
+                    'avatar': user[6] or 'boy',
+                    'needs_avatar': False
                 }
             else:
-                cur.execute("INSERT INTO users (phone) VALUES (%s) RETURNING id, phone, balance, total_spent, first_purchase_date, is_unlocked", (phone,))
-                new_user = cur.fetchone()
-                conn.commit()
-                user_data = {
-                    'id': new_user[0],
-                    'phone': new_user[1],
-                    'balance': float(new_user[2]) if new_user[2] else 0,
-                    'total_spent': float(new_user[3]) if new_user[3] else 0,
-                    'first_purchase_date': new_user[4].isoformat() if new_user[4] else None,
-                    'is_unlocked': new_user[5]
-                }
+                if avatar:
+                    cur.execute("INSERT INTO users (phone, avatar) VALUES (%s, %s) RETURNING id, phone, balance, total_spent, first_purchase_date, is_unlocked, avatar", (phone, avatar))
+                    new_user = cur.fetchone()
+                    conn.commit()
+                    user_data = {
+                        'id': new_user[0],
+                        'phone': new_user[1],
+                        'balance': float(new_user[2]) if new_user[2] else 0,
+                        'total_spent': float(new_user[3]) if new_user[3] else 0,
+                        'first_purchase_date': new_user[4].isoformat() if new_user[4] else None,
+                        'is_unlocked': new_user[5],
+                        'avatar': new_user[6] or 'boy',
+                        'needs_avatar': False
+                    }
+                else:
+                    return {
+                        'statusCode': 200,
+                        'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                        'body': json.dumps({'needs_avatar': True, 'phone': phone})
+                    }
             
             return {
                 'statusCode': 200,
