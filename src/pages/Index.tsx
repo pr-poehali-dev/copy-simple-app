@@ -210,7 +210,7 @@ const Index = () => {
 
   if (showAvatarSelect) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 flex items-center justify-center p-4">
         <Card className="w-full max-w-2xl p-8 animate-scale-in">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold mb-2">Выберите аватар</h2>
@@ -247,7 +247,7 @@ const Index = () => {
 
   if (showAuth) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 flex items-center justify-center p-4">
         <Card className="w-full max-w-md p-8 animate-scale-in">
           <div className="text-center mb-8">
             <div className="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-3xl mx-auto mb-4 flex items-center justify-center text-4xl">
@@ -292,7 +292,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50">
       <div className="max-w-7xl mx-auto p-4 pb-24">
         <header className="mb-8 pt-4">
           <div className="flex items-center justify-between mb-6">
@@ -312,7 +312,7 @@ const Index = () => {
             </Button>
           </div>
 
-          <div className="mb-6 p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl border-2 border-primary/20">
+          <div className="mb-6 p-4 bg-gradient-to-r from-blue-100 to-red-100 rounded-2xl border-2 border-blue-200">
             <p className="text-center text-lg font-semibold text-primary">
               ✨ Завтра всегда больше чем сегодня — Копи Просто
             </p>
@@ -479,7 +479,7 @@ const Index = () => {
             <Card className="p-8">
               <div className="text-center">
                 <h3 className="text-xl font-bold mb-6">Ваш аватар</h3>
-                <div className="relative w-64 h-64 mx-auto mb-6 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center overflow-hidden">
+                <div className="relative w-64 h-64 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-red-100 rounded-full flex items-center justify-center overflow-hidden">
                   <div className="text-6xl mb-4">{getAvatarEmoji(user?.avatar || 'boy')}</div>
                   <div className="absolute bottom-0 left-0 right-0 flex flex-wrap justify-center gap-2 p-4">
                     {purchases.slice(-6).map((purchase, idx) => (
