@@ -28,14 +28,14 @@ const CATEGORIES = [
 ];
 
 const AVATARS = [
-  { id: 'boy_blonde', emoji: '👱‍♂️', name: 'Блондин', gender: 'male' },
-  { id: 'boy_brunette', emoji: '👨🏻', name: 'Брюнет', gender: 'male' },
-  { id: 'boy_ginger', emoji: '👨🏻‍🦰', name: 'Рыжий', gender: 'male' },
-  { id: 'boy_dark', emoji: '👨🏽', name: 'Темноволосый', gender: 'male' },
-  { id: 'girl_blonde', emoji: '👱‍♀️', name: 'Блондинка', gender: 'female' },
-  { id: 'girl_brunette', emoji: '👩🏻', name: 'Брюнетка', gender: 'female' },
-  { id: 'girl_ginger', emoji: '👩🏻‍🦰', name: 'Рыжая', gender: 'female' },
-  { id: 'girl_dark', emoji: '👩🏽', name: 'Темноволосая', gender: 'female' },
+  { id: 'boy_blonde', emoji: '🧍‍♂️', name: 'Блондин', gender: 'male' },
+  { id: 'boy_brunette', emoji: '🕴️', name: 'Брюнет', gender: 'male' },
+  { id: 'boy_ginger', emoji: '🧑‍🦰', name: 'Рыжий', gender: 'male' },
+  { id: 'boy_dark', emoji: '🧑🏽', name: 'Темноволосый', gender: 'male' },
+  { id: 'girl_blonde', emoji: '🧍‍♀️', name: 'Блондинка', gender: 'female' },
+  { id: 'girl_brunette', emoji: '💃', name: 'Брюнетка', gender: 'female' },
+  { id: 'girl_ginger', emoji: '🧑‍🦰', name: 'Рыжая', gender: 'female' },
+  { id: 'girl_dark', emoji: '🧑🏽‍🦱', name: 'Темноволосая', gender: 'female' },
   { id: 'cat', emoji: '🐱', name: 'Котик', gender: 'neutral' },
   { id: 'tiger', emoji: '🐯', name: 'Тигрёнок', gender: 'neutral' },
   { id: 'panda', emoji: '🐼', name: 'Панда', gender: 'neutral' },
