@@ -33,13 +33,18 @@ export default function InstallButton() {
   if (!isInstallable) return null;
 
   return (
-    <Button 
-      onClick={handleInstall}
-      className="w-full mb-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white button-3d glow-purple"
-      size="lg"
-    >
-      <Icon name="Download" className="mr-2 h-5 w-5" />
-      Скачать приложение
-    </Button>
+    <div className="mb-6">
+      <Button 
+        onClick={handleInstall}
+        className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:from-purple-600 hover:via-pink-600 hover:to-red-600 text-white button-3d glow-purple shadow-2xl"
+        size="lg"
+      >
+        <Icon name="Smartphone" className="mr-2 h-5 w-5" />
+        📲 Скачать приложение на телефон
+      </Button>
+      <p className="text-xs text-center text-muted-foreground mt-2">
+        Установите приложение для быстрого доступа
+      </p>
+    </div>
   );
 }

@@ -9,6 +9,8 @@ import WheelOfFortune from '@/components/WheelOfFortune';
 import InstallButton from '@/components/InstallButton';
 import SupportChat from '@/components/SupportChat';
 import MotivationSection from '@/components/MotivationSection';
+import PinSetup from '@/components/PinSetup';
+import PinLogin from '@/components/PinLogin';
 
 const API_BASE = {
   auth: 'https://functions.poehali.dev/d983c386-5964-4e1e-9851-a74fc94a4552',
@@ -105,12 +107,23 @@ const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [showWheelOfFortune, setShowWheelOfFortune] = useState(false);
   const [wheelSpinCount, setWheelSpinCount] = useState(0);
+  const [showPinSetup, setShowPinSetup] = useState(false);
+  const [showPinLogin, setShowPinLogin] = useState(false);
+  const [storedPhone, setStoredPhone] = useState('');
   const { toast } = useToast();
 
   useEffect(() => {
     const cookieConsent = localStorage.getItem('cookieConsent');
     if (cookieConsent === 'accepted') {
       setShowCookieConsent(false);
+    }
+
+    const savedPhone = localStorage.getItem('userPhone');
+    const savedPin = localStorage.getItem('userPin');
+    if (savedPhone && savedPin) {
+      setStoredPhone(savedPhone);
+      setShowPinLogin(true);
+      setShowAuth(false);
     }
   }, []);
 
@@ -166,14 +179,71 @@ const Index = () => {
       const data = await res.json();
       
       if (data.user) {
-        setUser(data.user);
-        setShowAuth(false);
         setShowLanguageSelect(false);
+        setShowPinSetup(true);
+      }
+    } catch (error) {
+      toast({ title: 'Ошибка', description: 'Не удалось создать аккаунт', variant: 'destructive' });
+    }
+  };
+
+  const handlePinSet = async (pin: string) => {
+    localStorage.setItem('userPhone', phone);
+    localStorage.setItem('userPin', pin);
+    
+    try {
+      const res = await fetch(API_BASE.auth, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone, avatar: selectedAvatar, language: selectedLanguage })
+      });
+      const data = await res.json();
+      
+      if (data.user) {
+        setUser(data.user);
+        setShowPinSetup(false);
+        setShowAuth(false);
+        loadUserData(data.user.id);
         toast({ title: 'Добро пожаловать!', description: 'Аккаунт успешно создан' });
       }
     } catch (error) {
       toast({ title: 'Ошибка', description: 'Не удалось создать аккаунт', variant: 'destructive' });
     }
+  };
+
+  const handlePinLogin = async (pin: string) => {
+    const savedPin = localStorage.getItem('userPin');
+    
+    if (pin !== savedPin) {
+      toast({ title: 'Ошибка', description: 'Неверный PIN-код', variant: 'destructive' });
+      return;
+    }
+
+    try {
+      const res = await fetch(API_BASE.auth, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: storedPhone })
+      });
+      const data = await res.json();
+      
+      if (data.user) {
+        setUser(data.user);
+        setShowPinLogin(false);
+        loadUserData(data.user.id);
+        toast({ title: 'Вход выполнен', description: 'Добро пожаловать обратно!' });
+      }
+    } catch (error) {
+      toast({ title: 'Ошибка', description: 'Не удалось войти', variant: 'destructive' });
+    }
+  };
+
+  const handleChangePhone = () => {
+    localStorage.removeItem('userPhone');
+    localStorage.removeItem('userPin');
+    setShowPinLogin(false);
+    setShowAuth(true);
+    setStoredPhone('');
   };
 
   const loadUserData = async (userId: number) => {
@@ -334,6 +404,25 @@ const Index = () => {
 
   if (showSplash) {
     return <SplashScreen onFinish={() => setShowSplash(false)} />;
+  }
+
+  if (showPinLogin) {
+    return (
+      <PinLogin
+        phone={storedPhone}
+        onPinSubmit={handlePinLogin}
+        onChangePhone={handleChangePhone}
+      />
+    );
+  }
+
+  if (showPinSetup) {
+    return (
+      <PinSetup
+        phone={phone}
+        onPinSet={handlePinSet}
+      />
+    );
   }
 
   if (showAuth && !showAvatarSelect && !showLanguageSelect) {

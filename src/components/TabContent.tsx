@@ -65,22 +65,14 @@ export default function TabContent({
             <Card
               className="p-6 cursor-pointer card-3d text-center hover:scale-105 transition-transform"
               onClick={() => onCategoryClick(category)}
+              style={{
+                transform: 'perspective(1000px) rotateX(2deg)',
+                transition: 'all 0.3s ease'
+              }}
             >
-              <motion.div 
-                className="text-5xl mb-3"
-                animate={{ 
-                  rotateY: [0, 360],
-                  scale: [1, 1.2, 1]
-                }}
-                transition={{ 
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatDelay: 5,
-                  delay: index * 0.3
-                }}
-              >
+              <div className="text-5xl mb-3">
                 {category.emoji}
-              </motion.div>
+              </div>
               <p className="font-bold mb-1">{category.name}</p>
               <p className="text-xs text-muted-foreground">
                 {category.minPrice}-{category.maxPrice} ₽
