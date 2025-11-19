@@ -171,7 +171,7 @@ export default function AuthScreen({
       <Card className="w-full max-w-md p-8 card-3d bounce-in">
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold mb-4 text-3d bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent" style={{fontFamily: 'Georgia, serif'}}>
-            KOPI
+            Kopi
           </h1>
           <p className="text-muted-foreground">Покупай виртуально, копи реально!</p>
         </div>
