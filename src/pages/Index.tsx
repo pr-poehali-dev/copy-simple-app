@@ -4,6 +4,7 @@ import AuthScreen from '@/components/AuthScreen';
 import MainDashboard from '@/components/MainDashboard';
 import TabContent from '@/components/TabContent';
 import AppDialogs from '@/components/AppDialogs';
+import SplashScreen from '@/components/SplashScreen';
 
 const API_BASE = {
   auth: 'https://functions.poehali.dev/d983c386-5964-4e1e-9851-a74fc94a4552',
@@ -97,6 +98,7 @@ const Index = () => {
   const [avatarAction, setAvatarAction] = useState('idle');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [showCookieConsent, setShowCookieConsent] = useState(true);
+  const [showSplash, setShowSplash] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -292,6 +294,10 @@ const Index = () => {
     : 0;
   
   const isWithdrawalAvailable = user?.is_unlocked && user?.withdrawal_window_end && withdrawalWindowDaysLeft > 0;
+
+  if (showSplash) {
+    return <SplashScreen onFinish={() => setShowSplash(false)} />;
+  }
 
   if (showAuth && !showAvatarSelect && !showLanguageSelect) {
     return (
