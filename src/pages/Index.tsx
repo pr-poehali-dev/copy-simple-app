@@ -6,6 +6,9 @@ import TabContent from '@/components/TabContent';
 import AppDialogs from '@/components/AppDialogs';
 import SplashScreen from '@/components/SplashScreen';
 import WheelOfFortune from '@/components/WheelOfFortune';
+import InstallButton from '@/components/InstallButton';
+import SupportChat from '@/components/SupportChat';
+import MotivationSection from '@/components/MotivationSection';
 
 const API_BASE = {
   auth: 'https://functions.poehali.dev/d983c386-5964-4e1e-9851-a74fc94a4552',
@@ -396,6 +399,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100">
       <div className="container mx-auto p-4 pb-32">
+        <InstallButton />
+        <MotivationSection />
+        
         <MainDashboard
           user={user}
           getAvatarEmoji={getAvatarEmoji}
@@ -414,6 +420,8 @@ const Index = () => {
           onCategoryClick={handleCategoryClick}
           onAddCardClick={() => setShowAddCard(true)}
         />
+        
+        {user && <SupportChat userId={user.id} />}
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 h-64 avatar-room p-6">

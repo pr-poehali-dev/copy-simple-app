@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const CATEGORIES = [
   { id: 1, name: 'Одежда', emoji: '👕', minPrice: 500, maxPrice: 15000 },
@@ -54,18 +55,38 @@ export default function TabContent({
   if (activeTab === 'shop') {
     return (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {CATEGORIES.map((category) => (
-          <Card
+        {CATEGORIES.map((category, index) => (
+          <motion.div
             key={category.id}
-            className="p-6 cursor-pointer card-3d text-center"
-            onClick={() => onCategoryClick(category)}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: index * 0.05, duration: 0.3 }}
           >
-            <div className="text-5xl mb-3">{category.emoji}</div>
-            <p className="font-bold mb-1">{category.name}</p>
-            <p className="text-xs text-muted-foreground">
-              {category.minPrice}-{category.maxPrice} ₽
-            </p>
-          </Card>
+            <Card
+              className="p-6 cursor-pointer card-3d text-center hover:scale-105 transition-transform"
+              onClick={() => onCategoryClick(category)}
+            >
+              <motion.div 
+                className="text-5xl mb-3"
+                animate={{ 
+                  rotateY: [0, 360],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{ 
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatDelay: 5,
+                  delay: index * 0.3
+                }}
+              >
+                {category.emoji}
+              </motion.div>
+              <p className="font-bold mb-1">{category.name}</p>
+              <p className="text-xs text-muted-foreground">
+                {category.minPrice}-{category.maxPrice} ₽
+              </p>
+            </Card>
+          </motion.div>
         ))}
       </div>
     );

@@ -1,7 +1,8 @@
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import Icon from '@/components/ui/icon';
+import { motion } from 'framer-motion';
 
 interface User {
   id: number;
@@ -43,18 +44,32 @@ export default function MainDashboard({
       <Card className="mb-6 p-6 card-3d">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="text-6xl">{getAvatarEmoji(user?.avatar || 'boy_blonde')}</div>
+            <motion.div 
+              className="text-6xl"
+              animate={{ 
+                rotate: [0, 10, -10, 0],
+                scale: [1, 1.1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                repeatDelay: 3
+              }}
+            >
+              {getAvatarEmoji(user?.avatar || 'boy_blonde')}
+            </motion.div>
             <div>
-              <h2 className="text-2xl font-bold text-3d">
+              <h2 className="text-2xl font-bold text-3d flex items-center gap-2">
+                <motion.span
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <Icon name="PiggyBank" className="h-6 w-6 text-primary" />
+                </motion.span>
                 {user?.balance.toFixed(0)} ₽
               </h2>
-              <p className="text-sm text-muted-foreground">Накоплено</p>
+              <p className="text-sm text-muted-foreground font-semibold">Вы уже накопили</p>
             </div>
-          </div>
-          <div className="text-right">
-            <Badge variant="secondary" className="text-lg px-4 py-2 soft-shadow">
-              {user?.total_spent.toFixed(0)} ₽ потрачено
-            </Badge>
           </div>
         </div>
         
