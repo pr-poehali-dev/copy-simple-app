@@ -236,6 +236,10 @@ const Index = () => {
         setAvatarAction(category.emoji);
         setTimeout(() => setAvatarAction('idle'), 2000);
         
+        const audio = new Audio('https://cdn.poehali.dev/intertnal/sounds/applause.mp3');
+        audio.volume = 0.3;
+        audio.play().catch(() => {});
+        
         toast({ 
           title: '✅ Покупка совершена!', 
           description: `+${data.purchase.cashback.toFixed(0)} ₽ кэшбэк (80%)` 
