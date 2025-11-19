@@ -1,0 +1,24 @@
+{
+  "name": "Копи Просто",
+  "short_name": "Копи Просто",
+  "description": "Покупай виртуально, копи реально",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn.poehali.dev/projects/d169fa6d-9f43-4d19-81ea-a0b486accf9a/files/7ddb13c9-6cae-4cb5-b79e-554db09d42bc.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn.poehali.dev/projects/d169fa6d-9f43-4d19-81ea-a0b486accf9a/files/7ddb13c9-6cae-4cb5-b79e-554db09d42bc.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
