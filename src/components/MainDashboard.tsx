@@ -25,6 +25,7 @@ interface MainDashboardProps {
   isWithdrawalAvailable: boolean;
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  onWithdrawClick: () => void;
 }
 
 export default function MainDashboard({
@@ -35,6 +36,7 @@ export default function MainDashboard({
   isWithdrawalAvailable,
   activeTab,
   setActiveTab,
+  onWithdrawClick,
 }: MainDashboardProps) {
   return (
     <>
@@ -73,7 +75,10 @@ export default function MainDashboard({
                 <p className="font-bold text-lg">Окно вывода открыто!</p>
                 <p className="text-sm">Осталось {withdrawalWindowDaysLeft} {withdrawalWindowDaysLeft === 1 ? 'день' : 'дня'}</p>
               </div>
-              <Button className="bg-white text-primary hover:bg-gray-100 button-3d">
+              <Button 
+                onClick={onWithdrawClick}
+                className="bg-white text-primary hover:bg-gray-100 button-3d"
+              >
                 Вывести
               </Button>
             </div>

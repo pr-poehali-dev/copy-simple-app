@@ -5,6 +5,7 @@ import MainDashboard from '@/components/MainDashboard';
 import TabContent from '@/components/TabContent';
 import AppDialogs from '@/components/AppDialogs';
 import SplashScreen from '@/components/SplashScreen';
+import WheelOfFortune from '@/components/WheelOfFortune';
 
 const API_BASE = {
   auth: 'https://functions.poehali.dev/d983c386-5964-4e1e-9851-a74fc94a4552',
@@ -99,6 +100,8 @@ const Index = () => {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [showCookieConsent, setShowCookieConsent] = useState(true);
   const [showSplash, setShowSplash] = useState(true);
+  const [showWheelOfFortune, setShowWheelOfFortune] = useState(false);
+  const [wheelSpinCount, setWheelSpinCount] = useState(0);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -180,6 +183,9 @@ const Index = () => {
       const cardsData = await cardsRes.json();
       if (purchasesData.purchases) setPurchases(purchasesData.purchases);
       if (cardsData.cards) setCards(cardsData.cards);
+      
+      const spinCount = parseInt(localStorage.getItem(`wheel_spin_count_${userId}`) || '0');
+      setWheelSpinCount(spinCount);
     } catch (error) {
       console.error('Failed to load user data', error);
     }
@@ -281,6 +287,34 @@ const Index = () => {
     }
   };
 
+  const handleWithdrawClick = () => {
+    setShowWheelOfFortune(true);
+  };
+
+  const handleWheelSpin = (prize: any) => {
+    if (!user) return;
+    
+    const newSpinCount = wheelSpinCount + 1;
+    setWheelSpinCount(newSpinCount);
+    localStorage.setItem(`wheel_spin_count_${user.id}`, newSpinCount.toString());
+    
+    const bonusAmount = prize.type === 'fixed' 
+      ? prize.value 
+      : Math.round(user.balance * prize.value / 100);
+    
+    const newBalance = user.balance + bonusAmount;
+    setUser({ ...user, balance: newBalance });
+    
+    setTimeout(() => {
+      setShowWheelOfFortune(false);
+      toast({ 
+        title: '🎉 Поздравляем!', 
+        description: `Вы выиграли ${bonusAmount}₽! Теперь можете вывести средства.`,
+        duration: 5000
+      });
+    }, 2500);
+  };
+
   const getAvatarEmoji = (avatarId: string) => {
     return AVATARS.find(a => a.id === avatarId)?.emoji || '👱‍♂️';
   };
@@ -370,6 +404,7 @@ const Index = () => {
           isWithdrawalAvailable={isWithdrawalAvailable}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
+          onWithdrawClick={handleWithdrawClick}
         />
 
         <TabContent
@@ -412,6 +447,15 @@ const Index = () => {
         onCustomPurchase={handleCustomPurchase}
         showCookieConsent={showCookieConsent}
         onCookieConsent={handleCookieConsent}
+      />
+
+      <WheelOfFortune
+        open={showWheelOfFortune}
+        onClose={() => setShowWheelOfFortune(false)}
+        onSpin={handleWheelSpin}
+        userBalance={user?.balance || 0}
+        userId={user?.id.toString() || '0'}
+        spinCount={wheelSpinCount}
       />
     </div>
   );
