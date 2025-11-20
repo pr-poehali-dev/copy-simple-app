@@ -5,6 +5,7 @@ import Icon from '@/components/ui/icon';
 export default function InstallButton() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState(false);
+  const [showManualInstructions, setShowManualInstructions] = useState(false);
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -15,22 +16,34 @@ export default function InstallButton() {
 
     window.addEventListener('beforeinstallprompt', handler);
 
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    if (!isStandalone) {
+      setTimeout(() => {
+        if (!isInstallable) {
+          setIsInstallable(true);
+        }
+      }, 2000);
+    }
+
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
   const handleInstall = async () => {
-    if (!deferredPrompt) return;
-
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      setDeferredPrompt(null);
-      setIsInstallable(false);
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      
+      if (outcome === 'accepted') {
+        setDeferredPrompt(null);
+        setIsInstallable(false);
+      }
+    } else {
+      setShowManualInstructions(true);
     }
   };
 
-  if (!isInstallable) return null;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+  if (isStandalone || !isInstallable) return null;
 
   return (
     <div className="mb-6">
@@ -45,6 +58,22 @@ export default function InstallButton() {
       <p className="text-xs text-center text-muted-foreground mt-2">
         Установите приложение для быстрого доступа
       </p>
+      
+      {showManualInstructions && (
+        <div className="mt-4 p-4 bg-white rounded-lg shadow-md text-sm">
+          <p className="font-bold mb-2">📱 Как установить приложение:</p>
+          <div className="space-y-2 text-xs">
+            <p><b>Chrome (Android):</b> Меню (⋮) → "Установить приложение"</p>
+            <p><b>Safari (iPhone):</b> Поделиться → "На экран Домой"</p>
+          </div>
+          <button 
+            onClick={() => setShowManualInstructions(false)}
+            className="mt-3 text-xs text-blue-600 underline"
+          >
+            Закрыть
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -154,10 +154,18 @@ const Index = () => {
       if (data.needs_avatar) {
         setShowAvatarSelect(true);
       } else if (data.user) {
-        setUser(data.user);
-        setShowAuth(false);
-        loadUserData(data.user.id);
-        toast({ title: 'Вход выполнен', description: `Добро пожаловать!` });
+        const savedPin = localStorage.getItem('userPin');
+        const savedPhone = localStorage.getItem('userPhone');
+        
+        if (!savedPin || savedPhone !== phone) {
+          setShowPinSetup(true);
+          setShowAuth(false);
+        } else {
+          setUser(data.user);
+          setShowAuth(false);
+          loadUserData(data.user.id);
+          toast({ title: 'Вход выполнен', description: `Добро пожаловать!` });
+        }
       }
     } catch (error) {
       toast({ title: 'Ошибка', description: 'Не удалось войти', variant: 'destructive' });
@@ -218,6 +226,9 @@ const Index = () => {
       toast({ title: 'Ошибка', description: 'Неверный PIN-код', variant: 'destructive' });
       return;
     }
+    
+    setShowSplash(true);
+    setTimeout(() => setShowSplash(false), 3000);
 
     try {
       const res = await fetch(API_BASE.auth, {
