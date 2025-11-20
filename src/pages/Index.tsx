@@ -343,8 +343,8 @@ const Index = () => {
   };
 
   const handleAddCard = async () => {
-    if (!user || cardNumber.length !== 4 || !cardHolder.trim()) {
-      toast({ title: 'Ошибка', description: 'Введите последние 4 цифры карты и имя держателя', variant: 'destructive' });
+    if (!user || cardNumber.length !== 4) {
+      toast({ title: 'Ошибка', description: 'Введите последние 4 цифры карты', variant: 'destructive' });
       return;
     }
 
@@ -355,7 +355,7 @@ const Index = () => {
         body: JSON.stringify({
           user_id: user.id,
           card_number: cardNumber,
-          card_holder: cardHolder.toUpperCase()
+          card_holder: '****'
         })
       });
       const data = await res.json();
@@ -363,7 +363,6 @@ const Index = () => {
         setCards([data.card, ...cards]);
         setShowAddCard(false);
         setCardNumber('');
-        setCardHolder('');
         toast({ title: 'Карта добавлена', description: 'Теперь можно совершать покупки' });
       }
     } catch (error) {

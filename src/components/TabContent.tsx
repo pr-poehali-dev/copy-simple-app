@@ -138,8 +138,12 @@ export default function TabContent({
           Добавить карту
         </Button>
 
-        <div className="mt-8 text-center text-xs text-muted-foreground space-y-2 mb-4">
-          <div className="flex justify-center gap-4">
+        <div className="mt-8 text-center text-xs text-muted-foreground space-y-3 mb-4">
+          <div className="flex justify-center gap-4 flex-wrap">
+            <Link to="/install" className="hover:text-primary underline font-medium">
+              📲 Инструкция по установке
+            </Link>
+            <span>•</span>
             <Link to="/privacy" className="hover:text-primary underline">
               Политика конфиденциальности
             </Link>

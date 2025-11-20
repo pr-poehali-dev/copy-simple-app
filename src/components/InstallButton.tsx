@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import { Link } from 'react-router-dom';
 
 export default function InstallButton() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -66,12 +67,20 @@ export default function InstallButton() {
             <p><b>Chrome (Android):</b> Меню (⋮) → "Установить приложение"</p>
             <p><b>Safari (iPhone):</b> Поделиться → "На экран Домой"</p>
           </div>
-          <button 
-            onClick={() => setShowManualInstructions(false)}
-            className="mt-3 text-xs text-blue-600 underline"
-          >
-            Закрыть
-          </button>
+          <div className="flex gap-2 mt-3">
+            <Link 
+              to="/install"
+              className="text-xs text-blue-600 underline font-semibold"
+            >
+              Подробная инструкция
+            </Link>
+            <button 
+              onClick={() => setShowManualInstructions(false)}
+              className="text-xs text-gray-600 underline"
+            >
+              Закрыть
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -55,27 +55,60 @@ export default function AppDialogs({
   return (
     <>
       <Dialog open={showAddCard} onOpenChange={setShowAddCard}>
-        <DialogContent className="card-3d">
+        <DialogContent className="card-3d max-w-md">
           <DialogHeader>
-            <DialogTitle>Добавить карту</DialogTitle>
+            <DialogTitle className="text-center">💳 Добавить карту</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
-            <Input 
-              placeholder="Последние 4 цифры"
-              value={cardNumber}
-              onChange={(e) => setCardNumber(e.target.value.slice(0, 4))}
-              maxLength={4}
-              className="h-12 soft-shadow"
-            />
-            <Input 
-              placeholder="Имя держателя карты"
-              value={cardHolder}
-              onChange={(e) => setCardHolder(e.target.value)}
-              className="h-12 soft-shadow"
-            />
-            <Button onClick={onAddCard} className="w-full h-12 button-3d">
-              Добавить
+          <div className="space-y-6">
+            <div className="relative">
+              <div className="w-full h-48 rounded-2xl shadow-2xl p-6 flex flex-col justify-between text-white" 
+                   style={{
+                     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+                     transform: 'perspective(1000px) rotateY(-5deg)',
+                   }}>
+                <div className="flex justify-between items-start">
+                  <div className="text-2xl font-bold">💳</div>
+                  <div className="text-xs opacity-75">Копи Просто</div>
+                </div>
+                
+                <div>
+                  <div className="text-xl tracking-wider font-mono mb-2">
+                    {cardNumber ? `•••• •••• •••• ${cardNumber}` : '•••• •••• •••• ••••'}
+                  </div>
+                </div>
+                
+                <div className="flex justify-between items-end">
+                  <div className="text-xs opacity-75">VALID</div>
+                  <div className="text-xs opacity-75">MM/YY</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-medium mb-2 block">Последние 4 цифры карты</label>
+                <Input 
+                  placeholder="1234"
+                  value={cardNumber}
+                  onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                  maxLength={4}
+                  className="h-14 text-center text-2xl tracking-widest font-mono soft-shadow"
+                  type="tel"
+                />
+              </div>
+            </div>
+            
+            <Button 
+              onClick={onAddCard} 
+              className="w-full h-14 button-3d text-lg"
+              disabled={cardNumber.length !== 4}
+            >
+              Добавить карту
             </Button>
+            
+            <p className="text-xs text-center text-muted-foreground">
+              🔒 Мы храним только последние 4 цифры для идентификации карты
+            </p>
           </div>
         </DialogContent>
       </Dialog>
