@@ -111,6 +111,7 @@ const Index = () => {
   const [showPinLogin, setShowPinLogin] = useState(false);
   const [storedPhone, setStoredPhone] = useState('');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isPinVerified, setIsPinVerified] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -134,10 +135,18 @@ const Index = () => {
 
     const savedPhone = localStorage.getItem('userPhone');
     const savedPin = localStorage.getItem('userPin');
+    const sessionVerified = sessionStorage.getItem('pinVerified');
+    
     if (savedPhone && savedPin) {
       setStoredPhone(savedPhone);
-      setShowPinLogin(true);
-      setShowAuth(false);
+      if (sessionVerified === 'true') {
+        // PIN уже проверен в этой сессии, пропускаем
+        setIsPinVerified(true);
+        handleAutoLogin(savedPhone);
+      } else {
+        setShowPinLogin(true);
+        setShowAuth(false);
+      }
     }
 
     return () => {
@@ -254,6 +263,26 @@ const Index = () => {
     }
   };
 
+  const handleAutoLogin = async (phoneNumber: string) => {
+    try {
+      const res = await fetch(API_BASE.auth, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phoneNumber })
+      });
+      const data = await res.json();
+      
+      if (data.user) {
+        setUser(data.user);
+        setShowAuth(false);
+        setShowPinLogin(false);
+        loadUserData(data.user.id);
+      }
+    } catch (error) {
+      console.error('Auto-login error:', error);
+    }
+  };
+
   const handlePinLogin = async (pin: string) => {
     const savedPin = localStorage.getItem('userPin');
     
@@ -261,6 +290,10 @@ const Index = () => {
       toast({ title: 'Ошибка', description: 'Неверный PIN-код', variant: 'destructive' });
       return;
     }
+    
+    // Сохраняем успешную верификацию PIN на всю сессию
+    sessionStorage.setItem('pinVerified', 'true');
+    setIsPinVerified(true);
     
     setShowSplash(true);
     setTimeout(() => setShowSplash(false), 3000);
@@ -287,9 +320,11 @@ const Index = () => {
   const handleChangePhone = () => {
     localStorage.removeItem('userPhone');
     localStorage.removeItem('userPin');
+    sessionStorage.removeItem('pinVerified');
     setShowPinLogin(false);
     setShowAuth(true);
     setStoredPhone('');
+    setIsPinVerified(false);
   };
 
   const loadUserData = async (userId: number) => {
