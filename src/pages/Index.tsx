@@ -31,7 +31,7 @@ const CATEGORIES = [
   { id: 9, name: 'Электроника', emoji: '📱', minPrice: 3000, maxPrice: 100000 },
   { id: 10, name: 'Подарки', emoji: '🎁', minPrice: 500, maxPrice: 20000 },
   { id: 11, name: 'Напитки', emoji: '🥤', minPrice: 50, maxPrice: 1000 },
-  { id: 12, name: 'Другое', emoji: '❓', minPrice: 50, maxPrice: 100000 },
+  { id: 12, name: 'Другое', emoji: '❓', minPrice: 50, maxPrice: 1000000 },
 ];
 
 const AVATARS = [
@@ -110,9 +110,23 @@ const Index = () => {
   const [showPinSetup, setShowPinSetup] = useState(false);
   const [showPinLogin, setShowPinLogin] = useState(false);
   const [storedPhone, setStoredPhone] = useState('');
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
   const { toast } = useToast();
 
   useEffect(() => {
+    // Отслеживание статуса сети
+    const handleOnline = () => {
+      setIsOnline(true);
+      toast({ title: '✅ Онлайн', description: 'Соединение восстановлено' });
+    };
+    const handleOffline = () => {
+      setIsOnline(false);
+      toast({ title: '📵 Офлайн', description: 'Нет подключения к интернету' });
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
     const cookieConsent = localStorage.getItem('cookieConsent');
     if (cookieConsent === 'accepted') {
       setShowCookieConsent(false);
@@ -125,6 +139,11 @@ const Index = () => {
       setShowPinLogin(true);
       setShowAuth(false);
     }
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
   }, []);
 
   const handleCookieConsent = () => {
@@ -143,12 +162,22 @@ const Index = () => {
       return;
     }
 
+    if (!isOnline) {
+      toast({ title: 'Нет интернета', description: 'Проверьте подключение', variant: 'destructive' });
+      return;
+    }
+
     try {
       const res = await fetch(API_BASE.auth, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone })
       });
+      
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+      
       const data = await res.json();
       
       if (data.needs_avatar) {
@@ -168,7 +197,13 @@ const Index = () => {
         }
       }
     } catch (error) {
-      toast({ title: 'Ошибка', description: 'Не удалось войти', variant: 'destructive' });
+      console.error('Auth error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Не удалось войти';
+      toast({ 
+        title: 'Ошибка подключения', 
+        description: `${errorMessage}. Попробуйте позже`, 
+        variant: 'destructive' 
+      });
     }
   };
 

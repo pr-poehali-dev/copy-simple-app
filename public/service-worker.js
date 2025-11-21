@@ -17,7 +17,11 @@ self.addEventListener('install', (event) => {
     caches.open(STATIC_CACHE)
       .then((cache) => {
         console.log('[SW] Caching static assets');
-        return cache.addAll(STATIC_ASSETS);
+        return cache.addAll(STATIC_ASSETS).catch((error) => {
+          console.error('[SW] Failed to cache assets:', error);
+          // Продолжаем даже если кеширование не удалось
+          return Promise.resolve();
+        });
       })
       .then(() => self.skipWaiting())
   );
