@@ -259,19 +259,44 @@ const Index = () => {
 
   const loadUserData = async (userId: number) => {
     try {
+      // Загружаем данные из localStorage для офлайн режима
+      const cachedPurchases = localStorage.getItem(`purchases_${userId}`);
+      const cachedCards = localStorage.getItem(`cards_${userId}`);
+      
+      if (cachedPurchases) {
+        setPurchases(JSON.parse(cachedPurchases));
+      }
+      if (cachedCards) {
+        setCards(JSON.parse(cachedCards));
+      }
+
+      // Пытаемся загрузить актуальные данные
       const [purchasesRes, cardsRes] = await Promise.all([
         fetch(`${API_BASE.purchases}?user_id=${userId}`),
         fetch(`${API_BASE.cards}?user_id=${userId}`)
       ]);
       const purchasesData = await purchasesRes.json();
       const cardsData = await cardsRes.json();
-      if (purchasesData.purchases) setPurchases(purchasesData.purchases);
-      if (cardsData.cards) setCards(cardsData.cards);
+      
+      if (purchasesData.purchases) {
+        setPurchases(purchasesData.purchases);
+        localStorage.setItem(`purchases_${userId}`, JSON.stringify(purchasesData.purchases));
+      }
+      if (cardsData.cards) {
+        setCards(cardsData.cards);
+        localStorage.setItem(`cards_${userId}`, JSON.stringify(cardsData.cards));
+      }
       
       const spinCount = parseInt(localStorage.getItem(`wheel_spin_count_${userId}`) || '0');
       setWheelSpinCount(spinCount);
     } catch (error) {
       console.error('Failed to load user data', error);
+      // В офлайн режиме показываем кешированные данные
+      toast({ 
+        title: 'Офлайн режим', 
+        description: 'Показаны сохранённые данные',
+        variant: 'default'
+      });
     }
   };
 
