@@ -192,7 +192,7 @@ const WheelOfFortune = ({ open, onClose, onSpin, userBalance, userId, spinCount 
             </Button>
           ) : selectedPrize ? (
             <div className="text-center space-y-4 animate-in fade-in zoom-in duration-500">
-              <div className="text-3xl">🎉</div>
+              <div className="text-3xl" style={{ textShadow: 'none', filter: 'none' }}>🎉</div>
               <div className="space-y-2">
                 <h3 className="text-2xl font-bold text-purple-600">
                   Поздравляем!

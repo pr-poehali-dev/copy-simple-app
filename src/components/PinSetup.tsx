@@ -40,6 +40,7 @@ export default function PinSetup({ phone, onPinSet }: PinSetupProps) {
               animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
               transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
               className="text-6xl mb-4"
+              style={{ textShadow: 'none', filter: 'none' }}
             >
               🔐
             </motion.div>

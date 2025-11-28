@@ -54,11 +54,20 @@ export default function InstallButton() {
         size="lg"
       >
         <Icon name="Smartphone" className="mr-2 h-5 w-5" />
-        📲 Скачать приложение на телефон
+        <span style={{ textShadow: 'none', filter: 'none' }}>📲</span> Скачать приложение на телефон
       </Button>
       <p className="text-xs text-center text-muted-foreground mt-2">
         Установите приложение для быстрого доступа
       </p>
+      
+      <div className="flex flex-col items-center gap-4 mt-6">
+        <div className="w-24 h-24 rounded-3xl shadow-2xl overflow-hidden bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 flex items-center justify-center">
+          <span className="text-6xl" style={{ textShadow: 'none', filter: 'none' }}>💰</span>
+        </div>
+        <p className="text-lg font-bold text-center text-gradient">
+          Копи сегодня и станешь богаче завтра ❤️
+        </p>
+      </div>
       
       {showManualInstructions && (
         <div className="mt-4 p-4 bg-white rounded-lg shadow-md text-sm">

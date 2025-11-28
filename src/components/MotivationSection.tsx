@@ -23,6 +23,7 @@ export default function MotivationSection() {
               repeatDelay: 3
             }}
             className="text-5xl"
+            style={{ textShadow: 'none', filter: 'none' }}
           >
             ☕
           </motion.div>
@@ -61,6 +62,7 @@ export default function MotivationSection() {
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 1.5, repeat: Infinity }}
               className="text-xl"
+              style={{ textShadow: 'none', filter: 'none' }}
             >
               ❤️
             </motion.span>

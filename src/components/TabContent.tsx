@@ -70,7 +70,7 @@ export default function TabContent({
                 transition: 'all 0.3s ease'
               }}
             >
-              <div className="text-5xl mb-3">
+              <div className="text-5xl mb-3" style={{ textShadow: 'none', filter: 'none' }}>
                 {category.emoji}
               </div>
               <p className="font-bold mb-1">{category.name}</p>
@@ -91,7 +91,7 @@ export default function TabContent({
           <Card key={purchase.id} className="p-4 card-3d slide-up">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="text-3xl">{purchase.emoji}</div>
+                <div className="text-3xl" style={{ textShadow: 'none', filter: 'none' }}>{purchase.emoji}</div>
                 <div>
                   <p className="font-bold">{purchase.category}</p>
                   <p className="text-sm text-muted-foreground">

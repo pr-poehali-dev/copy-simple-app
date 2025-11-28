@@ -54,7 +54,7 @@ export default function InstallPrompt() {
       <Card className="w-full max-w-md p-6 soft-shadow animate-slide-up">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
-            <span className="text-2xl">💰</span>
+            <span className="text-2xl" style={{ textShadow: 'none', filter: 'none' }}>💰</span>
           </div>
           
           <div className="flex-1">

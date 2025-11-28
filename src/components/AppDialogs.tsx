@@ -57,7 +57,7 @@ export default function AppDialogs({
       <Dialog open={showAddCard} onOpenChange={setShowAddCard}>
         <DialogContent className="card-3d max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-center">💳 Добавить карту</DialogTitle>
+            <DialogTitle className="text-center"><span style={{ textShadow: 'none', filter: 'none' }}>💳</span> Добавить карту</DialogTitle>
           </DialogHeader>
           <div className="space-y-6">
             <div className="relative">
@@ -67,7 +67,7 @@ export default function AppDialogs({
                      transform: 'perspective(1000px) rotateY(-5deg)',
                    }}>
                 <div className="flex justify-between items-start">
-                  <div className="text-2xl font-bold">💳</div>
+                  <div className="text-2xl font-bold" style={{ textShadow: 'none', filter: 'none' }}>💳</div>
                   <div className="text-xs opacity-75">Копи Просто</div>
                 </div>
                 
@@ -107,17 +107,17 @@ export default function AppDialogs({
             </Button>
             
             <p className="text-xs text-center text-muted-foreground">
-              🔒 Мы храним только последние 4 цифры для идентификации карты
+              <span style={{ textShadow: 'none', filter: 'none' }}>🔒</span> Мы храним только последние 4 цифры для идентификации карты
             </p>
           </div>
         </DialogContent>
       </Dialog>
 
       <Dialog open={showCustomAmount} onOpenChange={setShowCustomAmount}>
-        <DialogContent className="card-3d">
+        <DialogContent className="card-3d" style={{ minHeight: 'auto', height: 'auto' }}>
           <DialogHeader>
             <DialogTitle>
-              {selectedCategory?.emoji} {selectedCategory?.name}
+              <span style={{ textShadow: 'none', filter: 'none' }}>{selectedCategory?.emoji}</span> {selectedCategory?.name}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
@@ -130,6 +130,7 @@ export default function AppDialogs({
               value={customAmount}
               onChange={(e) => setCustomAmount(e.target.value)}
               className="h-14 text-lg text-center soft-shadow"
+              inputMode="numeric"
             />
             <Button onClick={onCustomPurchase} className="w-full h-12 button-3d">
               Купить

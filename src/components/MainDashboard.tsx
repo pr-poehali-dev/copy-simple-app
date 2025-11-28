@@ -46,6 +46,7 @@ export default function MainDashboard({
           <div className="flex items-center gap-4">
             <motion.div 
               className="text-6xl"
+              style={{ textShadow: 'none', filter: 'none' }}
               animate={{ 
                 rotate: [0, 10, -10, 0],
                 scale: [1, 1.1, 1.1, 1]
@@ -109,9 +110,14 @@ export default function MainDashboard({
             variant={activeTab === tab ? 'default' : 'outline'}
             className={`button-3d ${activeTab === tab ? 'glow-blue' : ''}`}
           >
-            {tab === 'shop' && '🛍️ Покупки'}
-            {tab === 'history' && '📜 История'}
-            {tab === 'cards' && '💳 Карты'}
+            <span style={{ textShadow: 'none', filter: 'none' }}>
+              {tab === 'shop' && '🛍️'}
+              {tab === 'history' && '📜'}
+              {tab === 'cards' && '💳'}
+            </span>
+            {tab === 'shop' && ' Покупки'}
+            {tab === 'history' && ' История'}
+            {tab === 'cards' && ' Карты'}
           </Button>
         ))}
       </div>

@@ -111,7 +111,7 @@ export default function AuthScreen({
                 onClick={() => setSelectedAvatar(avatar.id)}
               >
                 <div className="text-center">
-                  <div className="text-5xl mb-2">{avatar.emoji}</div>
+                  <div className="text-5xl mb-2" style={{ textShadow: 'none', filter: 'none' }}>{avatar.emoji}</div>
                   <p className="text-xs font-medium">{avatar.name}</p>
                 </div>
               </Card>
@@ -148,7 +148,7 @@ export default function AuthScreen({
                 onClick={() => setSelectedLanguage(lang.code)}
               >
                 <div className="text-center">
-                  <div className="text-4xl mb-2">{lang.flag}</div>
+                  <div className="text-4xl mb-2" style={{ textShadow: 'none', filter: 'none' }}>{lang.flag}</div>
                   <p className="text-xs font-medium">{lang.name}</p>
                 </div>
               </Card>

@@ -20,7 +20,7 @@ const InstallGuide = () => {
 
         <Card className="p-8 card-3d">
           <div className="text-center mb-6">
-            <div className="text-6xl mb-4">📲</div>
+            <div className="text-6xl mb-4" style={{ textShadow: 'none', filter: 'none' }}>📲</div>
             <h1 className="text-3xl font-bold text-3d">Инструкция по установке приложения</h1>
             <p className="text-muted-foreground mt-2">
               Установите приложение на свой смартфон для быстрого доступа
@@ -30,7 +30,7 @@ const InstallGuide = () => {
           <div className="space-y-8">
             <section>
               <div className="flex items-center gap-3 mb-4">
-                <div className="text-4xl">🤖</div>
+                <div className="text-4xl" style={{ textShadow: 'none', filter: 'none' }}>🤖</div>
                 <h2 className="text-2xl font-bold">Android (Chrome)</h2>
               </div>
               
@@ -89,7 +89,7 @@ const InstallGuide = () => {
 
             <section>
               <div className="flex items-center gap-3 mb-4">
-                <div className="text-4xl">🍎</div>
+                <div className="text-4xl" style={{ textShadow: 'none', filter: 'none' }}>🍎</div>
                 <h2 className="text-2xl font-bold">iPhone / iPad (Safari)</h2>
               </div>
               
@@ -160,7 +160,7 @@ const InstallGuide = () => {
               <h2 className="text-xl font-bold mb-4 text-center">Преимущества установленного приложения</h2>
               <div className="grid md:grid-cols-3 gap-4">
                 <Card className="p-4 text-center bg-gradient-to-br from-blue-50 to-purple-50">
-                  <div className="text-3xl mb-2">⚡</div>
+                  <div className="text-3xl mb-2" style={{ textShadow: 'none', filter: 'none' }}>⚡</div>
                   <h3 className="font-semibold mb-1">Быстрый доступ</h3>
                   <p className="text-xs text-muted-foreground">
                     Запускайте приложение прямо с главного экрана
@@ -168,7 +168,7 @@ const InstallGuide = () => {
                 </Card>
                 
                 <Card className="p-4 text-center bg-gradient-to-br from-purple-50 to-pink-50">
-                  <div className="text-3xl mb-2">📱</div>
+                  <div className="text-3xl mb-2" style={{ textShadow: 'none', filter: 'none' }}>📱</div>
                   <h3 className="font-semibold mb-1">Нативный интерфейс</h3>
                   <p className="text-xs text-muted-foreground">
                     Работает как обычное приложение без адресной строки
@@ -176,7 +176,7 @@ const InstallGuide = () => {
                 </Card>
                 
                 <Card className="p-4 text-center bg-gradient-to-br from-pink-50 to-red-50">
-                  <div className="text-3xl mb-2">🔔</div>
+                  <div className="text-3xl mb-2" style={{ textShadow: 'none', filter: 'none' }}>🔔</div>
                   <h3 className="font-semibold mb-1">Уведомления</h3>
                   <p className="text-xs text-muted-foreground">
                     Получайте важные уведомления о кэшбэке
