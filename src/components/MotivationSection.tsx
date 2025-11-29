@@ -38,7 +38,7 @@ export default function MotivationSection() {
               </div>
               <div className="flex items-start gap-2">
                 <Icon name="PiggyBank" className="h-4 w-4 mt-1 text-primary flex-shrink-0" />
-                <p><span className="font-semibold text-foreground">Получайте 10% кэшбэк</span> — деньги накапливаются на вашем счёте автоматически</p>
+                <p><span className="font-semibold text-foreground">Получайте 80% кэшбэк</span> — деньги накапливаются на вашем счёте автоматически</p>
               </div>
               <div className="flex items-start gap-2">
                 <Icon name="Rocket" className="h-4 w-4 mt-1 text-primary flex-shrink-0" />
