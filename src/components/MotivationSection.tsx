@@ -34,7 +34,7 @@ export default function MotivationSection() {
             <div className="space-y-2 text-sm text-muted-foreground">
               <div className="flex items-start gap-2">
                 <Icon name="Coffee" className="h-4 w-4 mt-1 text-primary flex-shrink-0" />
-                <p><span className="font-semibold text-foreground">Покупайте виртуальный кофе</span> каждый день — вместо реального кофе за 200₽, "купите" его у нас!</p>
+                <p><span className="font-semibold text-foreground">Совершайте виртуальные покупки</span> у нас каждый день и вы увидите как ваши деньги растут</p>
               </div>
               <div className="flex items-start gap-2">
                 <Icon name="PiggyBank" className="h-4 w-4 mt-1 text-primary flex-shrink-0" />
